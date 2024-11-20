@@ -36,19 +36,16 @@ namespace De.HDBW.Apollo.Client.ViewModels
             INavigationService navigationService,
             IDialogService dialogService,
             ISessionService sessionService,
-            ISheetService sheetService,
             ITrainingService trainingService,
-            ISearchHistoryRepository searchHistoryRepository,
             IImageCacheService imageCacheService,
             IFavoriteRepository favoriteRepository,
-            ILogger<RegistrationViewModel> logger)
+            ILogger<FavoriteViewModel> logger)
             : base(dispatcherService, navigationService, dialogService, logger)
         {
             ArgumentNullException.ThrowIfNull(sessionService);
-            ArgumentNullException.ThrowIfNull(sheetService);
             ArgumentNullException.ThrowIfNull(trainingService);
-            ArgumentNullException.ThrowIfNull(searchHistoryRepository);
             ArgumentNullException.ThrowIfNull(imageCacheService);
+            ArgumentNullException.ThrowIfNull(favoriteRepository);
             SessionService = sessionService;
             TrainingService = trainingService;
             ImageCacheService = imageCacheService;
@@ -107,6 +104,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
         private async Task HandleInteract(InteractionEntry interaction)
         {
+            Logger.LogInformation($"Invoked {nameof(HandleInteract)} in {GetType().Name}.");
             switch (interaction.Data)
             {
                 case NavigationData navigationData:
@@ -162,7 +160,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 var text = item.TrainingName;
 
                 var decoratorText = string.IsNullOrWhiteSpace(item.TrainingType) ? Resources.Strings.Resources.Global_Training : item.TrainingType;
-                var decoratorImagePath = KnonwIcons.Training;
+                var decoratorImagePath = KnownIcons.Training;
 
                 EduProvider? eduProvider = null;
                 if (!string.IsNullOrWhiteSpace(item.TrainingProvider?.Name))

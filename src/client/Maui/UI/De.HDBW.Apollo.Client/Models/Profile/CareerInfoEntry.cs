@@ -23,7 +23,7 @@ namespace De.HDBW.Apollo.Client.Models.Profile
 
         public static CareerInfoEntry Import(CareerInfo data, Func<AbstractProfileEntry<CareerInfo>, Task> editHandle, Func<AbstractProfileEntry<CareerInfo>, bool> canEditHandle, Func<AbstractProfileEntry<CareerInfo>, Task> deleteHandle, Func<AbstractProfileEntry<CareerInfo>, bool> canDeleteHandle)
         {
-            return new CareerInfoEntry(data, editHandle, canEditHandle,  deleteHandle, canDeleteHandle);
+            return new CareerInfoEntry(data, editHandle, canEditHandle, deleteHandle, canDeleteHandle);
         }
 
         protected override ObservableCollection<StringValue> GetAllLines(CareerInfo data)

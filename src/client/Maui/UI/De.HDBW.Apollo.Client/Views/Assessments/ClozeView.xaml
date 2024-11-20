@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:hwv="clr-namespace:HybridWebView;assembly=HybridWebView"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
+             x:Class="De.HDBW.Apollo.Client.Views.Assessments.ClozeView"
+             Title="{x:Binding Title}"
+             x:DataType="viewModel:ClozeViewModel"
+             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
+             Style="{StaticResource DefaultPageStyle}">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{x:Binding NavigateBackCommand, Mode=OneWay}" />
+    </Shell.BackButtonBehavior>
+    <Grid RowDefinitions="Auto, *,Auto">
+        <Label Text="{x:Binding Question.Text, Mode=OneWay}" Margin="24,0,24,16" SemanticProperties.Hint="{x:Binding BindingContext[TxtAssesmentsGlobalBlindPersons], Source={x:Reference PART_Root}, Mode=OneWay}" SemanticProperties.Description="{x:Binding Question.Text, Mode=OneWay}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
+        <Border Grid.Row="1" StrokeThickness="0" x:Name="PART_HOST">
+            <hwv:HybridWebView x:Name="PART_WebView"
+                    HybridAssetRoot="hybrid_root"
+                    MainFile="proxy"
+                    RawMessageReceived="OnMessageReceived"
+                    Navigated="HandleNavigated"
+                    Loaded="HandleLoaded"/>
+        </Border>
+        <Border Grid.Row="2" Padding="24,16" Style="{StaticResource FooterStyle}">
+            <Button Text="{x:Binding [BtnTxtAssesmentsGlobalNextQuestion], Mode=OneWay}" Command="{x:Binding NavigateCommand, Mode=OneTime}" />
+        </Border>
+    </Grid>
+</ContentPage>

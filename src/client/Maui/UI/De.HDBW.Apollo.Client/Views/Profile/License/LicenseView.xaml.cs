@@ -5,7 +5,7 @@ using De.HDBW.Apollo.Client.ViewModels.Profile.LicenseEditors;
 
 namespace De.HDBW.Apollo.Client.Views.Profile.License
 {
-    [XamlCompilation(XamlCompilationOptions.Skip)]
+    // [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class LicenseView : ContentPage
     {
         public LicenseView(LicenseViewModel model)
@@ -20,6 +20,12 @@ namespace De.HDBW.Apollo.Client.Views.Profile.License
             {
                 return BindingContext as LicenseViewModel;
             }
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            ViewModel?.CancelCommand.Execute(null);
+            return true;
         }
     }
 }

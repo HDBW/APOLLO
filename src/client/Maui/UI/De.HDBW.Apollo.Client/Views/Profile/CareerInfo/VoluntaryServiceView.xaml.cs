@@ -5,7 +5,7 @@ using De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors;
 
 namespace De.HDBW.Apollo.Client.Views.Profile.CareerInfo
 {
-    [XamlCompilation(XamlCompilationOptions.Skip)]
+    // [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class VoluntaryServiceView : ContentPage
     {
         public VoluntaryServiceView(VoluntaryServiceViewModel model)
@@ -20,6 +20,12 @@ namespace De.HDBW.Apollo.Client.Views.Profile.CareerInfo
             {
                 return BindingContext as VoluntaryServiceViewModel;
             }
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            ViewModel?.CancelCommand.Execute(null);
+            return true;
         }
     }
 }

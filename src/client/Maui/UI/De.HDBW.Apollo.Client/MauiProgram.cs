@@ -1,15 +1,17 @@
 // (c) Licensed to the HDBW under one or more agreements.
 // The HDBW licenses this file to you under the MIT license.
 
-using System.ComponentModel;
 using CommunityToolkit.Maui;
 using CommunityToolkit.Mvvm.Messaging;
 using De.HDBW.Apollo.Client.Contracts;
 using De.HDBW.Apollo.Client.Dialogs;
+using De.HDBW.Apollo.Client.Enums;
 using De.HDBW.Apollo.Client.Helper;
+using De.HDBW.Apollo.Client.Messages;
 using De.HDBW.Apollo.Client.Models;
 using De.HDBW.Apollo.Client.Services;
 using De.HDBW.Apollo.Client.ViewModels;
+using De.HDBW.Apollo.Client.ViewModels.Assessments;
 using De.HDBW.Apollo.Client.ViewModels.Profile;
 using De.HDBW.Apollo.Client.ViewModels.Profile.CareerInfoEditors;
 using De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors;
@@ -20,6 +22,7 @@ using De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors;
 using De.HDBW.Apollo.Client.ViewModels.Profile.WebReferenceEditors;
 using De.HDBW.Apollo.Client.ViewModels.Training;
 using De.HDBW.Apollo.Client.Views;
+using De.HDBW.Apollo.Client.Views.Assessments;
 using De.HDBW.Apollo.Client.Views.Profile;
 using De.HDBW.Apollo.Client.Views.Profile.CareerInfo;
 using De.HDBW.Apollo.Client.Views.Profile.EducationInfo;
@@ -29,7 +32,6 @@ using De.HDBW.Apollo.Client.Views.Profile.Qualification;
 using De.HDBW.Apollo.Client.Views.Profile.WebReference;
 using De.HDBW.Apollo.Client.Views.Training;
 using De.HDBW.Apollo.Data;
-using De.HDBW.Apollo.Data.Helper;
 using De.HDBW.Apollo.Data.Repositories;
 using De.HDBW.Apollo.Data.Services;
 using De.HDBW.Apollo.SharedContracts.Enums;
@@ -38,13 +40,15 @@ using De.HDBW.Apollo.SharedContracts.Models;
 using De.HDBW.Apollo.SharedContracts.Repositories;
 using De.HDBW.Apollo.SharedContracts.Services;
 using FedericoNembrini.Maui.CustomDatePicker;
-using GrpcClient.Service;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Client;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
+using Microsoft.Maui.Controls.Handlers.Items;
 using Microsoft.Maui.Handlers;
+using Microsoft.Maui.LifecycleEvents;
+using Plugin.Maui.Audio;
 using Serilog;
 using Serilog.Configuration;
 using Serilog.Core;
@@ -53,6 +57,12 @@ using Serilog.Sinks.ApplicationInsights;
 using Serilog.Sinks.ApplicationInsights.TelemetryConverters;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 using The49.Maui.BottomSheet;
+
+#if ANDROID
+using De.HDBW.Apollo.Client.Platforms;
+#else
+using HybridWebView;
+#endif
 
 namespace De.HDBW.Apollo.Client
 {
@@ -86,6 +96,22 @@ namespace De.HDBW.Apollo.Client
                 .UseMauiCompatibility()
                 .UseCustomDatePicker()
                 .UseSkiaSharp()
+                .ConfigureLifecycleEvents((events) =>
+                {
+#if ANDROID
+                    events.AddAndroid((android) =>
+                    {
+                        android.OnResume((activity) => { WeakReferenceMessenger.Default.Send(new LiveCycleChangedMessage(LifeCycleState.Running)); });
+                        android.OnPause((activity) => { WeakReferenceMessenger.Default.Send(new LiveCycleChangedMessage(LifeCycleState.Paused)); });
+                    });
+#elif IOS
+                    events.AddiOS((ios) =>
+                    {
+                        ios.OnActivated((application) => { WeakReferenceMessenger.Default.Send(new LiveCycleChangedMessage(LifeCycleState.Running)); });
+                        ios.DidEnterBackground((application) => { WeakReferenceMessenger.Default.Send(new LiveCycleChangedMessage(LifeCycleState.Paused)); });
+                    });
+#endif
+                })
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("NotoSans-Regular.ttf", "NotoSansRegular");
@@ -95,7 +121,22 @@ namespace De.HDBW.Apollo.Client
                     fonts.AddFont("NotoSerif-Bold.ttf", "NotoSerifBold");
                     fonts.AddFont("ApolloFontIcons.ttf", "ApolloFontIcons");
                 })
-            .UseBottomSheet();
+            .UseBottomSheet()
+            .AddAudio(
+                playbackOptions =>
+                {
+#if IOS || MACCATALYST
+                    playbackOptions.Category = AVFoundation.AVAudioSessionCategory.Playback;
+#endif
+                },
+                recordingOptions =>
+                {
+#if IOS || MACCATALYST
+                    recordingOptions.Category = AVFoundation.AVAudioSessionCategory.Record;
+                    recordingOptions.Mode = AVFoundation.AVAudioSessionMode.Default;
+                    recordingOptions.CategoryOptions = AVFoundation.AVAudioSessionCategoryOptions.MixWithOthers;
+#endif
+                });
             builder.ConfigureMauiHandlers(SetupHandlers);
             return builder.Build();
         }
@@ -173,6 +214,8 @@ namespace De.HDBW.Apollo.Client
             var localEntities = new List<Type>()
             {
                 typeof(SearchHistory),
+                typeof(CachedRawData),
+                typeof(LocalAssessmentSession),
             };
             builder.Services.AddSingleton<IDataBaseConnectionProvider>(new DataBaseConnectionProvider(dbFilePath, flags, IocServiceHelper.ServiceProvider?.GetService<ILogger<DataBaseConnectionProvider>>(), localEntities));
         }
@@ -228,6 +271,7 @@ namespace De.HDBW.Apollo.Client
 
         private static void SetupServices(IServiceCollection services, IUserSecretsService userSecretsService, AuthenticationResult? authenticationResult)
         {
+            services.AddSingleton<IAudioPlayerService, AudioPlayerService>();
             services.AddSingleton<IImageCacheService, ImageCacheService>();
             services.AddSingleton((s) => { return Preferences.Default; });
             services.AddSingleton<IPreferenceService, PreferenceService>();
@@ -236,12 +280,10 @@ namespace De.HDBW.Apollo.Client
             services.AddSingleton<ISessionService>(new SessionService(authenticationResult?.UniqueId, authenticationResult?.Account.HomeAccountId));
             services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<ISheetService, SheetService>();
-            services.AddSingleton<IUseCaseBuilder, UseCaseBuilder>();
             services.AddSingleton<IFeedbackService, FeedbackService>();
             services.AddSingleton<IMessenger, WeakReferenceMessenger>();
             services.AddSingleton<INetworkService, NetworkService>();
             services.AddSingleton<ITouchService, TouchService>();
-            services.AddSingleton<IAssessmentScoreService, AssessmentScoreService>();
 
             var occupationSearchUrl = userSecretsService["OccupationSearchAPIURL"] ?? string.Empty;
             services.AddSingleton<IOccupationService>((serviceProvider) =>
@@ -249,17 +291,19 @@ namespace De.HDBW.Apollo.Client
                 return new OccupationService(occupationSearchUrl, serviceProvider.GetService<ILogger<OccupationService>>());
             });
 
+            services.AddSingleton<IAssessmentService, AssessmentService>();
+
             var apiUrl = userSecretsService["SwaggerAPIURL"] ?? string.Empty;
             var apiToken = userSecretsService["SwaggerAPIToken"] ?? string.Empty;
             services.AddSingleton<ITrainingService>((serviceProvider) =>
             {
-                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
+                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>() !);
                 return new TrainingService(serviceProvider.GetService<ILogger<TrainingService>>(), apiUrl, apiToken, handler);
             });
 
             services.AddSingleton<IProfileService>((serviceProvider) =>
             {
-                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
+                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>() !);
                 var service = new ProfileService(serviceProvider.GetService<ILogger<ProfileService>>(), apiUrl, apiToken, handler);
                 service.UpdateAuthorizationHeader(authenticationResult?.CreateAuthorizationHeader());
                 return service;
@@ -267,7 +311,7 @@ namespace De.HDBW.Apollo.Client
 
             services.AddSingleton<IApolloListService>((serviceProvider) =>
             {
-                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
+                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>() !);
                 var service = new ApolloListService(serviceProvider.GetService<ILogger<ApolloListService>>(), apiUrl, apiToken, handler);
                 service.UpdateAuthorizationHeader(authenticationResult?.CreateAuthorizationHeader());
 
@@ -277,7 +321,7 @@ namespace De.HDBW.Apollo.Client
             var unregisterUserUrl = userSecretsService["UnRegisteUserEndpointURL"] ?? string.Empty;
             services.AddSingleton<IUnregisterUserService>((serviceProvider) =>
             {
-                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
+                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>() !);
                 var service = new UnregisterUserService(serviceProvider.GetService<ILogger<UnregisterUserService>>(), unregisterUserUrl, apiToken, handler);
                 service.UpdateAuthorizationHeader(authenticationResult?.CreateAuthorizationHeader());
 
@@ -286,7 +330,7 @@ namespace De.HDBW.Apollo.Client
 
             services.AddSingleton<IUserService>((serviceProvider) =>
             {
-                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>()!);
+                var handler = new ContentLoggingHttpMessageHandler(serviceProvider.GetService<ILogger<ContentLoggingHttpMessageHandler>>() !);
                 var service = new UserService(serviceProvider.GetService<ILogger<UserService>>(), apiUrl, apiToken, serviceProvider.GetService<IProfileService>(), handler);
                 service.UpdateAuthorizationHeader(authenticationResult?.CreateAuthorizationHeader());
                 return service;
@@ -295,23 +339,6 @@ namespace De.HDBW.Apollo.Client
 
         private static void SetupRepositories(IServiceCollection services)
         {
-            services.AddSingleton<IAssessmentItemRepository, AssessmentItemRepository>();
-            services.AddSingleton<IAssessmentScoreRepository, AssessmentScoreRepository>();
-            services.AddSingleton<IAssessmentCategoryRepository, AssessmentCategoryRepository>();
-            services.AddSingleton<IAssessmentCategoryResultRepository, AssessmentCategoryResultRepository>();
-            services.AddSingleton<IQuestionItemRepository, QuestionItemRepository>();
-            services.AddSingleton<IAnswerItemResultRepository, AnswerItemResultRepository>();
-            services.AddSingleton<IAnswerItemRepository, AnswerItemRepository>();
-            services.AddSingleton<IQuestionMetaDataRelationRepository, QuestionMetaDataRelationRepository>();
-            services.AddSingleton<IAnswerMetaDataRelationRepository, AnswerMetaDataRelationRepository>();
-            services.AddSingleton<IMetaDataMetaDataRelationRepository, MetaDataMetaDataRelationRepository>();
-            services.AddSingleton<IMetaDataRepository, MetaDataRepository>();
-            services.AddSingleton<ICourseItemRepository, CourseItemRepository>();
-            services.AddSingleton<ICourseContactRepository, CourseContactRepository>();
-            services.AddSingleton<ICourseAppointmentRepository, CourseAppointmentRepository>();
-            services.AddSingleton<ICourseContactRelationRepository, CourseContactRelationRepository>();
-            services.AddSingleton<IEduProviderItemRepository, EduProviderItemRepository>();
-            services.AddSingleton<ICategoryRecomendationItemRepository, CategoryRecomendationItemRepository>();
             services.AddSingleton<IUserRepository>((serviceProvider) =>
             {
                 return new UserRepository(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), $"User_{Guid.Empty}.json"), serviceProvider.GetService<ILogger<UserRepository>>());
@@ -323,15 +350,14 @@ namespace De.HDBW.Apollo.Client
             });
 
             services.AddSingleton<ISearchHistoryRepository, SearchHistoryRepository>();
+            services.AddSingleton<ILocalAssessmentSessionRepository, LocalAssessmentSessionRepository>();
+            services.AddSingleton<IRawDataCacheRepository, RawDataCacheRepository>();
         }
 
         private static void SetupViewsAndViewModels(IServiceCollection services)
         {
             services.AddTransient<AppShell>();
             services.AddTransient<AppShellViewModel>();
-
-            services.AddTransient<StartView>();
-            services.AddTransient<StartViewModel>();
 
             services.AddTransient<ExtendedSplashScreenView>();
             services.AddTransient<ExtendedSplashScreenViewModel>();
@@ -344,15 +370,6 @@ namespace De.HDBW.Apollo.Client
 
             services.AddTransient<PickUserNameView>();
             services.AddTransient<PickUserNameViewModel>();
-
-            services.AddTransient<UseCaseDescriptionView>();
-            services.AddTransient<UseCaseDescriptionViewModel>();
-
-            services.AddTransient<UseCaseSelectionView>();
-            services.AddTransient<UseCaseSelectionViewModel>();
-
-            services.AddTransient<CancelAssessmentDialog>();
-            services.AddTransient<CancelAssessmentDialogViewModel>();
 
             services.AddTransient<SkipQuestionDialog>();
             services.AddTransient<SkipQuestionDialogViewModel>();
@@ -370,25 +387,19 @@ namespace De.HDBW.Apollo.Client
             services.AddTransient<SelectOptionDialog>();
             services.AddTransient<SelectOptionDialogViewModel>();
 
+            services.AddTransient<ImageZoomDialog>();
+            services.AddTransient<ImageZoomDialogViewModel>();
+
             services.AddTransient<EmptyView>();
             services.AddTransient<EmptyViewModel>();
-
-            services.AddTransient<AssessmentView>();
-            services.AddTransient<AssessmentViewModel>();
-
-            services.AddTransient<AssessmentResultView>();
-            services.AddTransient<AssessmentResultViewModel>();
-
-            services.AddTransient<AssessmentDescriptionView>();
-            services.AddTransient<AssessmentDescriptionViewModel>();
 
             services.AddTransient<SettingsView>();
             services.AddTransient<SettingsViewModel>();
             services.AddTransient<LicensesView>();
             services.AddTransient<LicensesViewModel>();
 
-            services.AddTransient<FavoriteView>();
-            services.AddTransient<FavoriteViewModel>();
+            services.AddTransient<Views.FavoriteView>();
+            services.AddTransient<ViewModels.FavoriteViewModel>();
 
             // Training
             services.AddTransient<TrainingView>();
@@ -487,6 +498,50 @@ namespace De.HDBW.Apollo.Client
 
             services.AddTransient<SearchFilterSheet>();
             services.AddTransient<SearchFilterSheetViewModel>();
+
+            services.AddTransient<AssessmentFeedView>();
+            services.AddTransient<AssessmentFeedViewModel>();
+            services.AddTransient<ModuleOverView>();
+            services.AddTransient<ModuleOverViewModel>();
+            services.AddTransient<Views.Assessments.FavoriteView>();
+            services.AddTransient<ViewModels.Assessments.FavoriteViewModel>();
+            services.AddTransient<ModuleDetailView>();
+            services.AddTransient<ModuleDetailViewModel>();
+            services.AddTransient<LanguageSelectionView>();
+            services.AddTransient<LanguageSelectionViewModel>();
+            services.AddTransient<JobSearchViewModel>();
+            services.AddTransient<JobSearchView>();
+            services.AddTransient<JobSearchResultViewModel>();
+            services.AddTransient<JobSearchResultView>();
+
+            services.AddTransient<AssociateViewModel>();
+            services.AddTransient<AssociateView>();
+            services.AddTransient<BinaryViewModel>();
+            services.AddTransient<BinaryView>();
+            services.AddTransient<ChoiceViewModel>();
+            services.AddTransient<ChoiceView>();
+            services.AddTransient<ClozeViewModel>();
+            services.AddTransient<ClozeView>();
+            services.AddTransient<EaconditionViewModel>();
+            services.AddTransient<EaconditionView>();
+            services.AddTransient<EaconditionFilteredView>();
+            services.AddTransient<EaconditionDetailView>();
+            services.AddTransient<EafrequencyViewModel>();
+            services.AddTransient<EafrequencyView>();
+            services.AddTransient<ImagemapViewModel>();
+            services.AddTransient<ImagemapView>();
+            services.AddTransient<RatingViewModel>();
+            services.AddTransient<RatingView>();
+            services.AddTransient<SortViewModel>();
+            services.AddTransient<SortView>();
+
+            services.AddTransient<ResultOverViewModel>();
+            services.AddTransient<ResultOverView>();
+            services.AddTransient<ResultDetailSheetViewModel>();
+            services.AddTransient<ResultDetailSheet>();
+
+            services.AddTransient<SelectionSheet>();
+            services.AddTransient<SelectionSheetViewModel>();
         }
 
         private static void SetupRoutes()
@@ -495,16 +550,11 @@ namespace De.HDBW.Apollo.Client
             Routing.RegisterRoute(Routes.Shell, typeof(AppShell));
             Routing.RegisterRoute(Routes.RegistrationView, typeof(RegistrationView));
             Routing.RegisterRoute(Routes.PickUserNameView, typeof(PickUserNameView));
-            Routing.RegisterRoute(Routes.UseCaseDescriptionView, typeof(UseCaseDescriptionView));
-            Routing.RegisterRoute(Routes.UseCaseSelectionView, typeof(UseCaseSelectionView));
-            Routing.RegisterRoute(Routes.StartView, typeof(StartView));
-            Routing.RegisterRoute(Routes.AssessmentView, typeof(AssessmentView));
-            Routing.RegisterRoute(Routes.AssessmentDescriptionView, typeof(AssessmentDescriptionView));
-            Routing.RegisterRoute(Routes.AssessmentResultView, typeof(AssessmentResultView));
             Routing.RegisterRoute(Routes.SettingsView, typeof(SettingsView));
             Routing.RegisterRoute(Routes.LicensesView, typeof(LicensesView));
 
             Routing.RegisterRoute(Routes.TrainingView, typeof(TrainingView));
+            Routing.RegisterRoute(Routes.TrainingsFavoritesView, typeof(Views.FavoriteView));
             Routing.RegisterRoute(Routes.LoansView, typeof(LoansView));
             Routing.RegisterRoute(Routes.AppointmentsView, typeof(AppointmentsView));
             Routing.RegisterRoute(Routes.TrainingContentView, typeof(TrainingContentView));
@@ -547,10 +597,33 @@ namespace De.HDBW.Apollo.Client
             Routing.RegisterRoute(Routes.SearchView, typeof(SearchView));
             Routing.RegisterRoute(Routes.SearchFilterSheet, typeof(SearchFilterSheet));
 
+            Routing.RegisterRoute(Routes.ModuleOverView, typeof(ModuleOverView));
+            Routing.RegisterRoute(Routes.JobSearchView, typeof(JobSearchView));
+            Routing.RegisterRoute(Routes.JobSearchResultView, typeof(JobSearchResultView));
+            Routing.RegisterRoute(Routes.AssessmentFavoriteView, typeof(Views.Assessments.FavoriteView));
+            Routing.RegisterRoute(Routes.ModuleDetailView, typeof(ModuleDetailView));
+            Routing.RegisterRoute(Routes.LanguageSelectionView, typeof(LanguageSelectionView));
+
+            Routing.RegisterRoute(Routes.AssociateView, typeof(AssociateView));
+            Routing.RegisterRoute(Routes.BinaryView, typeof(BinaryView));
+            Routing.RegisterRoute(Routes.ChoiceView, typeof(ChoiceView));
+            Routing.RegisterRoute(Routes.ClozeView, typeof(ClozeView));
+            Routing.RegisterRoute(Routes.EaconditionView, typeof(EaconditionView));
+            Routing.RegisterRoute(Routes.EaconditionFilteredView, typeof(EaconditionFilteredView));
+            Routing.RegisterRoute(Routes.EaconditionDetailView, typeof(EaconditionDetailView));
+            Routing.RegisterRoute(Routes.EafrequencyView, typeof(EafrequencyView));
+            Routing.RegisterRoute(Routes.ImagemapView, typeof(ImagemapView));
+            Routing.RegisterRoute(Routes.ImagemapView, typeof(ImagemapView));
+            Routing.RegisterRoute(Routes.RatingView, typeof(RatingView));
+            Routing.RegisterRoute(Routes.SortView, typeof(SortView));
+
+            Routing.RegisterRoute(Routes.ResultOverView, typeof(ResultOverView));
+            Routing.RegisterRoute(Routes.ResultDetailSheet, typeof(ResultDetailSheet));
+            Routing.RegisterRoute(Routes.SelectionSheet, typeof(SelectionSheet));
+
             // TBD
             Routing.RegisterRoute(Routes.EmptyView, typeof(EmptyView));
             Routing.RegisterRoute(Routes.TutorialView, typeof(EmptyView));
-            Routing.RegisterRoute(Routes.FavoritesView, typeof(EmptyView));
         }
 
         private static void SetupHandler()
@@ -594,7 +667,6 @@ namespace De.HDBW.Apollo.Client
                 handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
 #endif
             });
-
             Microsoft.Maui.Handlers.ButtonHandler.Mapper.AppendToMapping("Text", (handler, view) =>
             {
 #if IOS
@@ -613,12 +685,15 @@ namespace De.HDBW.Apollo.Client
 
         private static void SetupHandlers(IMauiHandlersCollection handlers)
         {
+            handlers.AddHandler<ReorderableItemsView, ReorderableItemsViewHandler<ReorderableItemsView>>();
 #if IOS
-            handlers.AddHandler(typeof(SearchBar), typeof(De.HDBW.Apollo.Client.Platforms.iOS.CustomSearchbarHandler));
+            handlers.AddHandler(typeof(SearchBar), typeof(Platforms.iOS.CustomSearchbarHandler));
             handlers.AddHandler<Shell, Platforms.CustomShellHandler>();
+            handlers.AddHandler<HybridWebView.HybridWebView, HybridWebViewHandler>();
 #elif ANDROID
             handlers.AddHandler<Shell, Platforms.CustomShellHandler>();
+            handlers.AddHandler<HybridWebView.HybridWebView, CustomWebViewHandler>();
 #endif
         }
     }
-    }
+}

@@ -17,7 +17,7 @@ namespace De.HDBW.Apollo.Data.JsonConverter
             // Populate it with JSON properties
             while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
             {
-                string propertyName = reader.GetString()!;
+                string propertyName = reader.GetString() !;
                 reader.Read();
                 try
                 {
@@ -44,7 +44,7 @@ namespace De.HDBW.Apollo.Data.JsonConverter
                 }
             }
 
-            return new ApolloApiException(errorCode, message)!;
+            return new ApolloApiException(errorCode, message) !;
         }
 
         public override void Write(Utf8JsonWriter writer, ApolloApiException value, JsonSerializerOptions options)

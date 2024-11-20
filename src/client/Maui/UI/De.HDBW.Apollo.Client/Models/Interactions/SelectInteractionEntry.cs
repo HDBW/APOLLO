@@ -20,7 +20,8 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             Func<SelectInteractionEntry, Task> selectHandler,
             Func<SelectInteractionEntry, bool> canSelectHandler,
             Action<SelectInteractionEntry> selectedChangedHandler,
-            string? imagePath = null, bool uniformImagePath = true)
+            string? imagePath = null,
+            bool uniformImagePath = true)
             : base(text, data, navigateHandler, canNavigateHandle, imagePath, uniformImagePath)
         {
             SelectHandler = selectHandler;

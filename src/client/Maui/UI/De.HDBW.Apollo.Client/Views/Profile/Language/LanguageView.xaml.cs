@@ -5,7 +5,7 @@ using De.HDBW.Apollo.Client.ViewModels.Profile.LanguageEditors;
 
 namespace De.HDBW.Apollo.Client.Views.Profile.Language
 {
-    [XamlCompilation(XamlCompilationOptions.Skip)]
+    // [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class LanguageView : ContentPage
     {
         public LanguageView(LanguageViewModel model)
@@ -20,6 +20,12 @@ namespace De.HDBW.Apollo.Client.Views.Profile.Language
             {
                 return BindingContext as LanguageViewModel;
             }
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            ViewModel?.CancelCommand.Execute(null);
+            return true;
         }
     }
 }

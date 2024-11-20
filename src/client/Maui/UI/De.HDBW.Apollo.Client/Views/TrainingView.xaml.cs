@@ -32,5 +32,11 @@ namespace De.HDBW.Apollo.Client.Views
                 return BindingContext as TrainingViewModel;
             }
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            ViewModel?.NavigateBackCommand.Execute(null);
+            return true;
+        }
     }
 }

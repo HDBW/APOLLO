@@ -512,7 +512,7 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             var savedUser = await Service.GetAsync(userId, TokenSource!.Token);
             Assert.Equal(userId, savedUser!.Id);
             Assert.NotNull(savedUser.Profile!.EducationInfos);
-            Assert.True(savedUser.Profile!.EducationInfos!.Count()! >= index + 1);
+            Assert.True(savedUser.Profile!.EducationInfos!.Count >= index + 1);
             Assert.False(string.IsNullOrWhiteSpace(savedUser.Profile!.EducationInfos![index].Id));
             Assert.Equal(educationType, savedUser.Profile!.EducationInfos![index].EducationType.AsEnum<EducationType>());
             Assert.Equal(state, savedUser.Profile!.EducationInfos![index].CompletionState.AsEnum<CompletionState>());

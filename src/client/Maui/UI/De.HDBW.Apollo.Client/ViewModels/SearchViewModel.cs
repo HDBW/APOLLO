@@ -85,7 +85,23 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             get
             {
-                return HasFilter ? KnonwIcons.FilterActive : KnonwIcons.Filter;
+                return HasFilter ? KnownIcons.FilterActive : KnownIcons.Filter;
+            }
+        }
+
+        public bool IsRegistered
+        {
+            get
+            {
+                return SessionService?.HasRegisteredUser ?? false;
+            }
+        }
+
+        public string FavoriteIcon
+        {
+            get
+            {
+                return KnownIcons.Favorites;
             }
         }
 
@@ -125,7 +141,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
             }
         }
 
-        public async override Task OnNavigatedToAsync()
+        public override async Task OnNavigatedToAsync()
         {
             using (var worker = ScheduleWork())
             {
@@ -356,7 +372,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                         KnownFilters.OccurenceEndDateFieldName,
                     };
 
-            var items = await TrainingService.SearchTrainingsAsync(filter, visibleFields, null, null, true,token);
+            var items = await TrainingService.SearchTrainingsAsync(filter, visibleFields, null, null, true, token);
             items = items ?? new List<TrainingModel>();
             _trainings = items.ToList();
             _customFilter = null;
@@ -416,7 +432,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
                 }
 
                 var decoratorText = string.IsNullOrWhiteSpace(item.TrainingType) ? Resources.Strings.Resources.Global_Training : item.TrainingType;
-                var decoratorImagePath = KnonwIcons.Training;
+                var decoratorImagePath = KnownIcons.Training;
 
                 EduProvider? eduProvider = null;
                 if (!string.IsNullOrWhiteSpace(item.TrainingProvider?.Name))
@@ -627,6 +643,9 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
                 searchResult.IsFavorite = favoriteIds.Contains(id);
             }
+
+            OnPropertyChanged(nameof(IsRegistered));
+            WeakReferenceMessenger.Default.Send(new UpdateToolbarMessage());
         }
 
         private Filter CreateDefaultTrainingsFilter(string query)
@@ -821,6 +840,39 @@ namespace De.HDBW.Apollo.Client.ViewModels
 
             var occurencesDates = model.Appointment.Where(x => (x.Occurences?.Any() ?? false)).SelectMany(x => x.Occurences).Select(x => (x.StartDate, x.EndDate)).ToList();
             return occurencesDates.Any(x => x.StartDate.Date <= (start?.Date ?? x.StartDate.Date) && x.EndDate.Date >= (end?.Date ?? x.EndDate.Date));
+        }
+
+        [RelayCommand(AllowConcurrentExecutions = false, CanExecute = nameof(CanOpenFavorites))]
+        private async Task OpenFavorites(CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    await NavigationService.NavigateAsync(Routes.TrainingsFavoritesView!, worker.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenFavorites)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenFavorites)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error while {nameof(OpenFavorites)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanOpenFavorites()
+        {
+            return !IsBusy && IsRegistered;
         }
     }
 }

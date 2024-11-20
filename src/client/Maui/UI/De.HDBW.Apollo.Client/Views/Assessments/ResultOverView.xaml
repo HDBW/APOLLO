@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.Assessments.ResultOverView"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models"
+             xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
+             xmlns:controls="clr-namespace:De.HDBW.Apollo.Client.Controls"
+             xmlns:assessmentModels="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
+             xmlns:interactionModels="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
+             Title="{x:Static strings:Resources.TxtAssesmentsResultOverViewPageTitle}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
+             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
+             Style="{StaticResource DefaultPageStyle}"
+             x:DataType="viewModels:ResultOverViewModel">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{x:Binding NavigateBackCommand, Mode=OneWay}" />
+    </Shell.BackButtonBehavior>
+    <ContentPage.Resources>
+
+        <DataTemplate x:Key="HeadlineTextTemplate" x:DataType="assessmentModels:HeadlineTextEntry">
+            <Border StrokeThickness="0">
+                <Label Text="{x:Binding Text, Mode=OneWay}" Margin="24,0,24,24" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" />
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SublineTextTemplate" x:DataType="assessmentModels:SublineTextEntry">
+            <Border StrokeThickness="0">
+                <Label Text="{x:Binding Text, Mode=OneWay}" Margin="24,0,24,20" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" />
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TextTemplate" x:DataType="assessmentModels:TextEntry">
+            <Border StrokeThickness="0">
+                <Label Text="{x:Binding Text, Mode=OneWay}" TextType="Html" Margin="24,0,24,20" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" />
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="GLDecoTemplate" x:DataType="assessmentModels:DecoEntry">
+            <Border StrokeThickness="0">
+                <Image Source="resultdeco.png" Margin="24" HeightRequest="122" HorizontalOptions="Center"/>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SKDecoTemplate" x:DataType="assessmentModels:DecoEntry">
+            <Border StrokeThickness="0">
+                <Image Source="resultdeco.png" Margin="24" HeightRequest="122" HorizontalOptions="Center"/>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SODecoTemplate" x:DataType="assessmentModels:ModuleScoreDecoEntry">
+            <Border StrokeThickness="0">
+                <controls:SegmentSvgImage Margin="24" Segments="{x:Binding Segments}" IsShowingModulResult="True" InputTransparent="True" x:Name="PART_Image" HeightRequest="280" />
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="GLScoreTemplate" x:DataType="assessmentModels:ModuleScoreEntry">
+            <Border StrokeThickness="0">
+                <Label Text="{x:Binding Description, Mode=OneWay}" TextType="Html" Margin="24,0,24,24" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" />
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SKScoreTemplate" x:DataType="assessmentModels:ModuleScoreEntry">
+            <Grid>
+                <Border Margin="24,4,24,12" StrokeThickness="0" Padding="16" Style="{StaticResource PictureEntryBorderStyle}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding InteractCommand}"/>
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{x:Binding Segment}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource TextColor}"/>
+                        <Grid ColumnDefinitions="Auto, *">
+                            <Label Text="{x:Binding Result, StringFormat='{0:P0}'}" Margin="0,0,8,0" TextColor="{StaticResource Primary}"  Style="{StaticResource Noto14}"/>
+                            <ProgressBar Grid.Column="1" Progress="{x:Binding Result}"/>
+                        </Grid>
+                        <Label Text="{x:Binding BindingContext[TxtAssesmentsResultOverViewSkillsTestFinishedDetails], Source={x:Reference PART_Root}}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" HorizontalOptions="End"/>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="EAScoreTemplate" x:DataType="assessmentModels:ModuleScoreEntry">
+            <Grid>
+                <Border Margin="24,4,24,12" StrokeThickness="0" Padding="16" Style="{StaticResource PictureEntryBorderStyle}">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="{x:Binding Segment, Mode=OneWay}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource TextColor}"/>
+                        <Grid ColumnDefinitions="Auto, *">
+                            <Label Text="{x:Binding Result, StringFormat='{0:P0}'}" Margin="0,0,8,0" Style="{StaticResource Noto14}" TextColor="{StaticResource Primary}" />
+                            <ProgressBar Grid.Column="1" Progress="{x:Binding Result}"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SOScoreTemplate" x:DataType="assessmentModels:ModuleScoreEntry">
+            <Grid>
+                <Border Margin="24,4,24,12" StrokeThickness="0" Padding="16" Style="{StaticResource PictureEntryBorderStyle}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding InteractCommand}"/>
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout >
+                        <Label Text="{x:Binding Segment, Mode=OneWay}" Margin="0,0,0,8" TextColor="{StaticResource TextColor}" Style="{StaticResource Noto16SemiBold}"/>
+                        <Label Text="{x:Binding Description, Mode=OneWay}" TextColor="{StaticResource TextColor}" Style="{StaticResource Noto14}" Margin="0,0,0,8"/>
+                        <Grid Margin="0,0,0,4">
+                            <ProgressBar Progress="{x:Binding Result, Mode=OneWay}"/>
+                            <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Line X1="0" Y1="0" X2="0" Y2="12" Stroke="{StaticResource Neutral0}" StrokeDashArray="2,2" />
+                                <Line X1="0" Y1="0" X2="0" Y2="12" Stroke="{StaticResource Primary}" StrokeDashArray="2,2" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                        <Label Text="{x:Binding DisplayQuantity, Mode=OneWay}" Margin="0,0,0,8" TextColor="{StaticResource Primary}" Style="{StaticResource Noto14SemiBold}" />
+                        <Label Text="{x:Binding BindingContext[TxtAssesmentsResultOverViewSoftSkillsTestFinishedInfos], Source={x:Reference PART_Root}}" HorizontalOptions="End" TextColor="{StaticResource Primary}" Style="{StaticResource Noto16SemiBold}" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="RecommendedTrainingInteractionEntry" x:DataType="interactionModels:SearchInteractionEntry">
+            <Grid>
+                <Border Style="{StaticResource PictureEntryBorderStyle}" Margin="24,4" SemanticProperties.Hint="{OnPlatform Android={x:Static strings:Resources.Global_Alttext_KursDetails}}">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1"  />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="*, Auto">
+                            <Label InputTransparent="True" Text="{x:Binding Text, Mode=OneTime}" TextType="Html" MaxLines="10" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource Primary}" Margin="16,16,8,8" />
+                            <ImageButton Grid.Column="1" Padding="12" VerticalOptions="Start" IsVisible="{x:Binding CanBeMadeFavorite}" SemanticProperties.Description="{x:Static strings:Resources.Global_Alttext_MakeFavorite}">
+                                <ImageButton.Source>
+                                    <FontImageSource Glyph="{x:Static models:KnownIcons.MakeFavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                </ImageButton.Source>
+                                <ImageButton.Triggers>
+                                    <DataTrigger TargetType="ImageButton" Binding="{x:Binding IsFavorite}" Value="True">
+                                        <Setter Property="Source">
+                                            <Setter.Value>
+                                                <FontImageSource Glyph="{x:Static models:KnownIcons.IsFavorite}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="SemanticProperties.Description" Value="{x:Static strings:Resources.Global_Alttext_IsFavorite}" />
+                                    </DataTrigger>
+                                </ImageButton.Triggers>
+                            </ImageButton>
+                        </Grid>
+                        <Label InputTransparent="True" Grid.Column="0" Text="{x:Binding Subline, Mode=OneTime}" TextType="Html" LineBreakMode="TailTruncation" MaxLines="3" Grid.Row="1" Style="{StaticResource Noto12}" Padding="16,0" IsVisible="{x:Binding HasSubline}" TextColor="{StaticResource TextColor}"/>
+                        <Label Margin="16,0,16,16" InputTransparent="True" Text="{x:Binding Info, Mode=OneTime}" Style="{StaticResource Noto12}" TextColor="{StaticResource TextColor}"/>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </DataTemplate>
+
+        <selector:ResultSectionTemplateSelector x:Key="ResultSectionTemplateSelector"
+                                                HeadlineTextTemplate="{StaticResource HeadlineTextTemplate}"
+                                                SublineTextTemplate="{StaticResource SublineTextTemplate}"
+                                                TextTemplate="{StaticResource TextTemplate}"
+                                                GLDecoTemplate="{StaticResource GLDecoTemplate}"
+                                                SKDecoTemplate="{StaticResource SKDecoTemplate}"
+                                                EADecoTemplate="{StaticResource SKDecoTemplate}"
+                                                SODecoTemplate="{StaticResource SODecoTemplate}"
+                                                GLScoreTemplate="{StaticResource GLScoreTemplate}"
+                                                SKScoreTemplate="{StaticResource SKScoreTemplate}"
+                                                EAScoreTemplate="{StaticResource EAScoreTemplate}"
+                                                SOScoreTemplate="{StaticResource SOScoreTemplate}"
+                                            />
+
+    </ContentPage.Resources>
+    <Border x:Name="PART_Root" StrokeThickness="0">
+        <CollectionView
+            ItemsSource="{x:Binding Sections}"
+            ItemTemplate="{StaticResource ResultSectionTemplateSelector}"/>
+    </Border>
+</ContentPage>

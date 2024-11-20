@@ -9,7 +9,7 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              x:DataType="viewModels:RegistrationViewModel"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
-             IsBusy="{x:Binding IsBusy}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
     <ContentPage.Resources>
         <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
@@ -28,7 +28,7 @@
             <CarouselView.ItemTemplate>
                 <DataTemplate x:DataType="models:InstructionEntry">
                     <Grid RowDefinitions="*, auto" BackgroundColor="{StaticResource Background}">
-                        <Image Source="{x:Binding ImagePath}" IsVisible="{Binding HasImage}" Margin="70,0"/>
+                        <Image Source="{x:Binding ImagePath}" IsVisible="{x:Binding HasImage}" Margin="70,0"/>
                         <Label Grid.Row="1" Text="{x:Binding Text}" HorizontalTextAlignment="Center" Style="{StaticResource Noto14SemiBold}" Margin="70,8,70,0"/>
                     </Grid>
                 </DataTemplate>
@@ -37,7 +37,7 @@
         <IndicatorView Grid.Row="3"
                x:Name="indicatorView"
                Margin="24,16,24,10"/>
-        <Border Grid.Row="4" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}">
+        <Border Grid.Row="4" Style="{StaticResource FooterStyle}">
             <VerticalStackLayout Margin="24,16">
                 <Button Margin="0,0,0,8" Text="{x:Static strings:Resources.Global_ContinueAsGuest}" Style="{StaticResource BorderButton}" Command="{x:Binding SkipCommand}"/>
                 <Button Text="{x:Static strings:Resources.Global_RegisterUser}" Command="{x:Binding RegisterCommand}" IsVisible="{x:Binding HasRegisterdUser, Converter={StaticResource InvertedBoolConverter}}"/>

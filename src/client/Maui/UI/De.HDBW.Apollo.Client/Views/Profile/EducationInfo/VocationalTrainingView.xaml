@@ -9,11 +9,11 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:DataType="viewModels:VocationalTrainingViewModel"
-             Title="{x:Binding Title}"
-             IsBusy="{x:Binding IsBusy}"
+             Title="{x:Binding Title, Mode=OneWay}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
     <Shell.BackButtonBehavior>
-        <BackButtonBehavior Command="{Binding CancelCommand}" />
+        <BackButtonBehavior Command="{x:Binding CancelCommand}" />
     </Shell.BackButtonBehavior>
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{x:Binding DeleteCommand}">
@@ -33,7 +33,7 @@
             <Border Style="{StaticResource InputBorderStyle}">
                 <Grid ColumnDefinitions="*, auto">
                     <Grid.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding SearchOccupationCommand}"  />
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding SearchOccupationCommand}"  />
                     </Grid.GestureRecognizers>
                     <Label Style="{StaticResource Noto14Primary}" Text="{x:Binding OccupationName}" SemanticProperties.Description="{x:Static strings:Resources.Global_Occupation}" VerticalOptions="Center" LineBreakMode="TailTruncation" MaxLines="2" Margin="0,0,4,0"/>
                     <Image Grid.Column="1" HeightRequest="24" WidthRequest="24">

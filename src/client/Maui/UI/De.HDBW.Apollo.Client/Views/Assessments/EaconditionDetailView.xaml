@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
+             xmlns:behaviours="clr-namespace:De.HDBW.Apollo.Client.Behaviors"
+             x:Class="De.HDBW.Apollo.Client.Views.Assessments.EaconditionDetailView"
+             Title="{x:Static strings:Resources.TxtAssesmentsEaconditionGlobalTitle}"
+             x:DataType="viewModel:EaconditionViewModel"
+             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
+             Style="{StaticResource DefaultPageStyle}">
+    <Grid x:Name="PART_Root">
+        <ScrollView BindingContext="{x:Binding Question, Mode=OneWay}">
+            <VerticalStackLayout x:DataType="models:EaconditionEntry">
+                <CarouselView ItemsSource="{x:Binding Images}" HeightRequest="204"
+                      IndicatorView="indicatorView">
+                    <CarouselView.Behaviors>
+                        <behaviours:SlideShowBehaviour />
+                    </CarouselView.Behaviors>
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate x:DataType="models:ImageEntry">
+                            <Image Source="{x:Binding AbsolutePath, Mode=OneWay, FallbackValue={x:Null}}" HeightRequest="204" Aspect="AspectFill"/>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+                <IndicatorView  x:Name="indicatorView" Margin="24,8,24,26"/>
+                <Label Text="{x:Binding BindingContext[TxtAssesmentsEaconditionDetailViewSuitingCategory], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="24,0,24,8" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}"/>
+                <Label Text="{x:Binding Bezeichnung}" Margin="24,0,24,24" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}"/>
+                <Label Text="{x:Binding Infotext}" Margin="24,0,24,24" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
+                <Label Text="{x:Binding BindingContext[TxtAssesmentsEaconditionDetailViewConditions], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="24,0,24,8" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
+                <Label Text="{x:Binding Voraussetzungen}" TextType="Html" Margin="24,0,24,24" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
+                <Label Text="{x:Binding BindingContext[TxtAssesmentsEaconditionDetailViewExampleProfessions], Source={x:Reference PART_Root}, Mode=OneWay}" Margin="24,0,24,8" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
+                <Label Text="{x:Binding Beispielberufe}" TextType="Html" Margin="24,0,24,24" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}"/>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

@@ -184,6 +184,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Training
         {
             base.RefreshCommands();
             Sections.OfType<InteractiveLineItem>().ToList().ForEach(line => { line.InteractCommand?.NotifyCanExecuteChanged(); });
+            Sections.OfType<ContactItem>().ToList().ForEach(line => { line.RefreshCommands(); });
         }
 
         private bool TryCreateAppointmentItem(Appointment appointment, [MaybeNullWhen(false)] out AppointmentItem item)
@@ -362,7 +363,7 @@ namespace De.HDBW.Apollo.Client.ViewModels.Training
                 return false;
             }
 
-            var contactItem = ContactItem.Import(header, contact!, null, null, null, null);
+            var contactItem = ContactItem.Import(header, contact!, OpenMail, CanOpenMail, OpenDailer, CanOpenDailer);
             if (!contactItem.Items.Any())
             {
                 return false;
@@ -472,6 +473,83 @@ namespace De.HDBW.Apollo.Client.ViewModels.Training
             else
             {
                 Sections.RemoveAt(index + 1);
+            }
+        }
+
+        private async Task OpenMail(string? email, CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    string[] recipients = new[] { email! };
+
+                    var message = new EmailMessage
+                    {
+                        Subject = string.Empty,
+                        Body = string.Empty,
+                        BodyFormat = EmailBodyFormat.PlainText,
+                        To = new List<string>(recipients),
+                    };
+
+                    await Email.Default.ComposeAsync(message);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenMail)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenMail)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenMail)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+            }
+        }
+
+        private bool CanOpenMail(string? email)
+        {
+            return !IsBusy && !string.IsNullOrWhiteSpace(email) && Email.Default.IsComposeSupported;
+        }
+
+        private bool CanOpenDailer(string? phoneNumber)
+        {
+            return !IsBusy && !string.IsNullOrWhiteSpace(phoneNumber) && PhoneDialer.Default.IsSupported;
+        }
+
+        private Task OpenDailer(string? phoneNumber, CancellationToken token)
+        {
+            using (var worker = ScheduleWork(token))
+            {
+                try
+                {
+                    token.ThrowIfCancellationRequested();
+                    PhoneDialer.Default.Open(phoneNumber!);
+                }
+                catch (OperationCanceledException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenDailer)} in {GetType().Name}.");
+                }
+                catch (ObjectDisposedException)
+                {
+                    Logger?.LogDebug($"Canceled {nameof(OpenDailer)} in {GetType().Name}.");
+                }
+                catch (Exception ex)
+                {
+                    Logger?.LogError(ex, $"Unknown error in {nameof(OpenDailer)} in {GetType().Name}.");
+                }
+                finally
+                {
+                    UnscheduleWork(worker);
+                }
+
+                return Task.CompletedTask;
             }
         }
     }

@@ -11,8 +11,6 @@ namespace De.HDBW.Apollo.Client.Models
 
         public const string ExtendedSplashScreenView = "/ExtendedSplashScreenView";
 
-        public const string StartView = "/StartView";
-
         public const string SearchView = "/SearchView";
 
         public const string FavoriteView = "/FavoriteView";
@@ -23,17 +21,9 @@ namespace De.HDBW.Apollo.Client.Models
 
         public const string PickUserNameView = "/PickUserNameView";
 
-        public const string UseCaseDescriptionView = "/UseCaseDescriptionView";
-
-        public const string UseCaseSelectionView = "/UseCaseSelectionView";
-
-        public const string AssessmentView = "/AssessmentView";
-
-        public const string AssessmentResultView = "/AssessmentResultView";
-
-        public const string AssessmentDescriptionView = "/AssessmentDescriptionView";
-
         public const string TrainingView = "/TrainingView";
+
+        public const string TrainingsFavoritesView = "/TrainingsFavoriteView";
 
         public const string LoansView = "/LoansView";
 
@@ -47,8 +37,6 @@ namespace De.HDBW.Apollo.Client.Models
         public const string LicensesView = "/LicensesView";
 
         public const string FeedbackView = "/FeedbackView";
-
-        public const string FavoritesView = "/EmptyView";
 
         public const string ProfileView = "/ProfileView";
 
@@ -86,5 +74,29 @@ namespace De.HDBW.Apollo.Client.Models
         public const string CareerInfoVoluntaryServiceView = "/CareerInfoVoluntaryServiceView";
         public const string CareerInfoBasicView = "/CareerInfoBasicView";
         public const string OccupationSearchView = "/OccupationSearchView";
+
+        public const string AssessmentFeedView = "/AssessmentFeedView";
+        public const string JobSearchView = "/JobSearchView";
+        public const string JobSearchResultView = "/JobSearchResultView";
+        public const string ModuleOverView = "/ModuleOverView";
+        public const string AssessmentFavoriteView = "/AssessmentFavoriteView";
+        public const string ModuleDetailView = "/ModuleDetailView";
+        public const string LanguageSelectionView = "/LanguageSelectionView";
+
+        public const string AssociateView = "/AssociateView";
+        public const string BinaryView = "/BinaryView";
+        public const string ChoiceView = "/ChoiceView";
+        public const string ClozeView = "/ClozeView";
+        public const string EaconditionView = "/EaconditionView";
+        public const string EaconditionFilteredView = "/EaconditionFilteredView";
+        public const string EaconditionDetailView = "/EaconditionDetailView";
+        public const string EafrequencyView = "/EafrequencyView";
+        public const string ImagemapView = "/ImagemapView";
+        public const string RatingView = "/RatingView";
+        public const string SortView = "/SortView";
+
+        public const string ResultOverView = "/ResultOverView";
+        public const string ResultDetailSheet = "/ResultDetailSheet";
+        public const string SelectionSheet = "/SelectionSheet";
     }
 }

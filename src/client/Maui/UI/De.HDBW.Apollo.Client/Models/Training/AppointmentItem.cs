@@ -3,7 +3,6 @@
 
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
-using De.HDBW.Apollo.Client.Helper;
 using Invite.Apollo.App.Graph.Common.Models.Trainings;
 
 namespace De.HDBW.Apollo.Client.Models.Training

@@ -20,7 +20,7 @@ namespace De.HDBW.Apollo.Client.Models.Profile
 
         public static WebReferenceEntry Import(WebReference data, Func<AbstractProfileEntry<WebReference>, Task> editHandle, Func<AbstractProfileEntry<WebReference>, bool> canEditHandle, Func<AbstractProfileEntry<WebReference>, Task> deleteHandle, Func<AbstractProfileEntry<WebReference>, bool> canDeleteHandle)
         {
-            return new WebReferenceEntry(data, editHandle, canEditHandle,  deleteHandle, canDeleteHandle);
+            return new WebReferenceEntry(data, editHandle, canEditHandle, deleteHandle, canDeleteHandle);
         }
 
         protected override ObservableCollection<StringValue> GetAllLines(WebReference data)

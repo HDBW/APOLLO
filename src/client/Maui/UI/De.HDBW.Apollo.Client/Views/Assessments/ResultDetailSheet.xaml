@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<the49:BottomSheet xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                   xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
+                   xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+                   x:Class="De.HDBW.Apollo.Client.Views.Assessments.ResultDetailSheet"
+                   xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
+                   xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
+                   xmlns:selector="clr-namespace:De.HDBW.Apollo.Client.Selector"
+                   ios:Page.UseSafeArea="true"
+                   HasHandle="True"
+                   HasBackdrop="True"
+                   IsCancelable="True"
+                   CornerRadius="16"
+                   Padding="0,20"
+                   BackgroundColor="{StaticResource Neutral500}"
+                   x:DataType="viewModels:ResultDetailSheetViewModel"
+                   Shown="OnShown">
+    <the49:BottomSheet.Detents>
+        <the49:RatioDetent Ratio="0.5" />
+    </the49:BottomSheet.Detents>
+    <Grid RowDefinitions="auto,*" FlowDirection="{x:Binding FlowDirection, Mode=OneWay}">
+        <Grid.Resources>
+            
+            <DataTemplate x:Key="TextTemplate" x:DataType="models:TextEntry">
+                <Border StrokeThickness="0">
+                    <Label Text="{x:Binding Text, Mode=OneWay}" TextType="Html" Margin="24,0" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" />
+                </Border>
+            </DataTemplate>
+
+            <DataTemplate x:Key="SegmentScoreTemplate" x:DataType="models:SegmentScoreEntry">
+                <Grid>
+                    <Border Margin="24,4,24,12" StrokeThickness="0" Padding="16" Style="{StaticResource PictureEntryBorderStyle}">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="{x:Binding Segment, Mode=OneWay}" Style="{StaticResource Noto14SemiBold}" TextColor="{StaticResource TextColor}"/>
+                            <Grid ColumnDefinitions="Auto, *">
+                                <Label Text="{x:Binding Result, StringFormat='{0:P0}'}" Margin="0,0,8,0" Style="{StaticResource Noto14}" TextColor="{StaticResource Primary}" />
+                                <ProgressBar Grid.Column="1" Progress="{x:Binding Result}"/>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+            </DataTemplate>
+
+            <selector:ResultSectionTemplateSelector x:Key="ResultSectionTemplateSelector"
+                                                TextTemplate="{StaticResource TextTemplate}"
+                                                SegmentScoreTemplate="{StaticResource SegmentScoreTemplate}"/>
+        </Grid.Resources>
+        <Grid HorizontalOptions="FillAndExpand" Padding="20,0,20,12" x:Name="PART_Root" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Label Text="{x:Binding [TxtAssesmentsResultDetailSheetHeadline], Mode=OneWay}" LineBreakMode="TailTruncation" Style="{StaticResource Noto20Bold}" TextColor="{StaticResource TextColor}" SemanticProperties.HeadingLevel="Level1" Margin="0,0,8,0" VerticalOptions="Center"/>
+            <ImageButton Grid.Column="1" Command="{x:Binding CloseCommand}"
+                          HeightRequest="24" WidthRequest="24" VerticalOptions="Center" HorizontalOptions="Center"
+                         SemanticProperties.Description="{x:Binding [Global_Close], Mode=OneWay}">
+                <ImageButton.Source>
+                    <FontImageSource Glyph="{StaticResource Close}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                </ImageButton.Source>
+            </ImageButton>
+        </Grid>
+        <CollectionView
+            Grid.Row="1"
+            ItemsSource="{x:Binding Sections}"
+            ItemTemplate="{StaticResource ResultSectionTemplateSelector}"/>
+    </Grid>
+</the49:BottomSheet>

@@ -5,7 +5,7 @@ using De.HDBW.Apollo.Client.ViewModels.Profile.QualificationEditors;
 
 namespace De.HDBW.Apollo.Client.Views.Profile.Qualification
 {
-    [XamlCompilation(XamlCompilationOptions.Skip)]
+    // [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class QualificationView : ContentPage
     {
         public QualificationView(QualificationViewModel model)
@@ -20,6 +20,12 @@ namespace De.HDBW.Apollo.Client.Views.Profile.Qualification
             {
                 return BindingContext as QualificationViewModel;
             }
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            ViewModel?.CancelCommand.Execute(null);
+            return true;
         }
     }
 }

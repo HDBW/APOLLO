@@ -3,7 +3,7 @@
 
 namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
 {
-    [XamlCompilation(XamlCompilationOptions.Skip)]
+    // [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class ContactView : ContentPage
     {
         public ContactView(ContactViewModel model)
@@ -18,6 +18,12 @@ namespace De.HDBW.Apollo.Client.ViewModels.Profile.ContactInfoEditors
             {
                 return BindingContext as ContactViewModel;
             }
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            ViewModel?.CancelCommand.Execute(null);
+            return true;
         }
     }
 }

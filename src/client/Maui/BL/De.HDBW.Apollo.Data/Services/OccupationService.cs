@@ -9,9 +9,9 @@ using OccupationGrpcService.Protos;
 using OccupationGrpcService.Services;
 using ProtoBuf.Grpc.Client;
 
-namespace GrpcClient.Service
+namespace De.HDBW.Apollo.Data.Services
 {
-    public class OccupationService : De.HDBW.Apollo.SharedContracts.Services.IOccupationService
+    public class OccupationService : SharedContracts.Services.IOccupationService
     {
         public OccupationService(string address, ILogger<OccupationService>? logger)
         {

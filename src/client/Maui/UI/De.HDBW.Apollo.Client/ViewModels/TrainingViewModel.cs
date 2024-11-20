@@ -87,7 +87,7 @@ namespace De.HDBW.Apollo.Client.ViewModels
         {
             get
             {
-                return IsFavorite ? KnonwIcons.IsFavorite : KnonwIcons.MakeFavorite;
+                return IsFavorite ? KnownIcons.IsFavorite : KnownIcons.MakeFavorite;
             }
         }
 

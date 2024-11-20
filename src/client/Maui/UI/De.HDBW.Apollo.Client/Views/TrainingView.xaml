@@ -9,11 +9,11 @@
              xmlns:controls="clr-namespace:De.HDBW.Apollo.Client.Controls"
              xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
              Title="{x:Static strings:Resources.TrainingsView_Title}"
-             IsBusy="{x:Binding IsBusy}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              x:DataType="viewModels:TrainingViewModel"
              Style="{StaticResource DefaultPageStyle}">
     <Shell.BackButtonBehavior>
-        <BackButtonBehavior Command="{Binding NavigateBackCommand}" />
+        <BackButtonBehavior Command="{x:Binding NavigateBackCommand, Mode=OneWay}" />
     </Shell.BackButtonBehavior>
     <ContentPage.ToolbarItems>
         <ToolbarItem x:DataType="viewModels:TrainingViewModel" Command="{x:Binding ToggleIsFavoriteCommand}" IconImageSource="{x:Binding FavoriteIcon, Converter={StaticResource UnicodeToImageFontsourceConvert}}" />
@@ -29,7 +29,7 @@
             <VerticalStackLayout Spacing="16">
                 <VerticalStackLayout Margin="24,0">
                     <Label Text="{x:Binding TrainingName, Mode=OneTime}" TextType="Html" Style="{StaticResource NotoSerif24Bold}" TextColor="{StaticResource Primary}" Margin="0,0,0,8"/>
-                    <Label Text="{x:Binding SubTitle, Mode=OneTime}" TextType="Html" Style="{StaticResource Noto16SemiBold}" IsVisible="{Binding HasSubTitle}"/>
+                    <Label Text="{x:Binding SubTitle, Mode=OneTime}" TextType="Html" Style="{StaticResource Noto16SemiBold}" IsVisible="{x:Binding HasSubTitle}"/>
                 </VerticalStackLayout>
                 <Grid>
                     <Image Source="{x:Binding ImagePath, Mode=OneTime}" MaximumHeightRequest="200" Aspect="AspectFill" IsVisible="{x:Binding HasImage}"/>
@@ -40,7 +40,7 @@
                         <HorizontalStackLayout>
                             <Image WidthRequest="16" HeightRequest="16" Margin="0,0,8,0" VerticalOptions="Center">
                                 <Image.Source>
-                                    <FontImageSource Glyph="{x:Static models:KnonwIcons.Training}" FontFamily="ApolloFontIcons" Size="16" Color="{StaticResource Neutral0}"/>
+                                    <FontImageSource Glyph="{x:Static models:KnownIcons.Training}" FontFamily="ApolloFontIcons" Size="16" Color="{StaticResource Neutral0}"/>
                                 </Image.Source>
                             </Image>
                             <Label Text="{x:Binding TrainingType, Mode=OneTime}" TextType="Html" TextColor="{StaticResource White}" LineBreakMode="TailTruncation"/>
@@ -51,7 +51,7 @@
                 <Grid ColumnDefinitions="auto, *" IsVisible="{x:Binding AccessibilityAvailable, Mode=OneTime}" Margin="24,0">
                     <Image HeightRequest="24" WidthRequest="24" Margin="0,0,8,0" VerticalOptions="Center">
                         <Image.Source>
-                            <FontImageSource Glyph="{x:Static models:KnonwIcons.Accessibility}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                            <FontImageSource Glyph="{x:Static models:KnownIcons.Accessibility}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </Image.Source>
                     </Image>
                     <Label Grid.Column="1" VerticalOptions="Center" Text="{x:Static strings:Resources.TrainingView_Accessibility}" />
@@ -60,7 +60,7 @@
                 <Grid ColumnDefinitions="auto, *" IsVisible="{x:Binding HasIndividualStartDate, Mode=OneTime}" Margin="24,0">
                     <Image WidthRequest="24" HeightRequest="24" Margin="0,0,8,0" VerticalOptions="Center">
                         <Image.Source>
-                            <FontImageSource Glyph="{x:Static models:KnonwIcons.Watch}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                            <FontImageSource Glyph="{x:Static models:KnownIcons.Watch}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                         </Image.Source>
                     </Image>
                     <Label Grid.Column="1" VerticalOptions="Center" Text="{x:Binding IndividualStartDate, Mode=OneTime}" TextType="Html" />
@@ -118,13 +118,13 @@
                         <Label Text="{x:Binding Header, Mode=OneTime}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0"/>
                         <Image WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1">
                             <Image.Source>
-                                <FontImageSource Glyph="{x:Static models:KnonwIcons.ChevronDown}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                <FontImageSource Glyph="{x:Static models:KnownIcons.ChevronDown}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                             </Image.Source>
                             <Image.Triggers>
                                 <DataTrigger TargetType="Image" Binding="{x:Binding IsExpanded}" Value="True">
                                     <Setter Property="Source">
                                         <Setter.Value>
-                                            <FontImageSource Glyph="{x:Static models:KnonwIcons.ChevronUp}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                            <FontImageSource Glyph="{x:Static models:KnownIcons.ChevronUp}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                                         </Setter.Value>
                                     </Setter>
                                 </DataTrigger>
@@ -150,13 +150,13 @@
                         <Label Text="{x:Binding Header, Mode=OneTime}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0"/>
                         <Image WidthRequest="24" HeightRequest="24" VerticalOptions="Center" Grid.Column="1">
                             <Image.Source>
-                                <FontImageSource Glyph="{x:Static models:KnonwIcons.ChevronDown}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                <FontImageSource Glyph="{x:Static models:KnownIcons.ChevronDown}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                             </Image.Source>
                             <Image.Triggers>
                                 <DataTrigger TargetType="Image" Binding="{x:Binding IsExpanded}" Value="True">
                                     <Setter Property="Source">
                                         <Setter.Value>
-                                            <FontImageSource Glyph="{x:Static models:KnonwIcons.ChevronUp}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                                            <FontImageSource Glyph="{x:Static models:KnownIcons.ChevronUp}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
                                         </Setter.Value>
                                     </Setter>
                                     <!-- Multiple Setter elements are allowed -->
@@ -274,7 +274,7 @@
                         <Label Text="{x:Binding Text, Mode=OneTime}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" Margin="0,0,8,0"/>
                         <Image Grid.Column="1" WidthRequest="16" HeightRequest="16" VerticalOptions="Center" HorizontalOptions="End" Margin="4">
                             <Image.Source>
-                                <FontImageSource Glyph="{x:Static models:KnonwIcons.ChevronLink}" FontFamily="ApolloFontIcons" Size="16" Color="{StaticResource Primary}"/>
+                                <FontImageSource Glyph="{x:Static models:KnownIcons.ChevronLink}" FontFamily="ApolloFontIcons" Size="16" Color="{StaticResource Primary}"/>
                             </Image.Source>
                         </Image>
                     </Grid>
@@ -307,7 +307,7 @@
                 <LinearItemsLayout Orientation="Vertical" />
             </CollectionView.ItemsLayout>
         </CollectionView>
-        <Border Grid.Row="1" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}" HeightRequest="76">
+        <Border Grid.Row="1" Style="{StaticResource FooterStyle}" HeightRequest="76">
             <Grid ColumnDefinitions="*, Auto" Margin="24,16">
                 <Label Text="{x:Binding Price}" MaxLines="1" Style="{StaticResource NotoSerif24Bold}" VerticalOptions="Center" Margin="0,0,8,0" />
                 <Button Grid.Column="1" Command="{x:Binding OpenProductCommand}" Text="{x:Static strings:Resources.TrainingView_OpenProvider}" IsVisible="{x:Binding HasProductUrl}"/>

@@ -21,7 +21,7 @@ namespace De.HDBW.Apollo.Client.Models.Profile
 
         public static LicenseEntry Import(License data, Func<AbstractProfileEntry<License>, Task> editHandle, Func<AbstractProfileEntry<License>, bool> canEditHandle, Func<AbstractProfileEntry<License>, Task> deleteHandle, Func<AbstractProfileEntry<License>, bool> canDeleteHandle)
         {
-            return new LicenseEntry(data, editHandle, canEditHandle,  deleteHandle, canDeleteHandle);
+            return new LicenseEntry(data, editHandle, canEditHandle, deleteHandle, canDeleteHandle);
         }
 
         protected override ObservableCollection<StringValue> GetAllLines(License data)

@@ -468,7 +468,7 @@ namespace De.HDBW.Apollo.Client.Services
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"Unknown error while {NavigatedFromPage} in {GetType().Name}.");
+                Logger?.LogError(ex, $"Unknown error while {nameof(NavigatedFromPage)} in {GetType().Name}.");
             }
         }
 

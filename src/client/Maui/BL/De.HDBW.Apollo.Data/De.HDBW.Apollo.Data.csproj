@@ -7,15 +7,7 @@
     <UseMauiEssentials>true</UseMauiEssentials>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="SampleData\Usecase1.bin" />
-    <None Remove="SampleData\Usecase2.bin" />
-    <None Remove="SampleData\Usecase3.bin" />
     <None Remove="sqlite-net-pcl" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="SampleData\Usecase1.bin" />
-    <EmbeddedResource Include="SampleData\Usecase2.bin" />
-    <EmbeddedResource Include="SampleData\Usecase3.bin" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\De.HDBW.Apollo.SharedContracts\De.HDBW.Apollo.SharedContracts.csproj">
@@ -24,10 +16,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Grpc.Net.Client" Version="2.63.0" />
-    <PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.40" />
+    <PackageReference Include="Microsoft.Maui.Essentials" Version="8.0.70" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.61.3" />
-    <PackageReference Include="Google.Protobuf" Version="3.27.1" />
-    <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.1.71" />
+    <PackageReference Include="Google.Protobuf" Version="3.27.2" />
+    <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.1.82" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
     <PackageReference Include="protobuf-net.Core" Version="3.2.30" />
     <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
@@ -39,5 +31,18 @@
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
       <_Parameter1>De.HDBW.Apollo.DeviceTestRunner</_Parameter1>
     </AssemblyAttribute>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="SampleData\Strings\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="SampleData\Strings\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

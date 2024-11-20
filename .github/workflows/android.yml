@@ -63,6 +63,7 @@ jobs:
         dotnet user-secrets set "SwaggerAPIURL" "${{secrets.SWAGGERENDPOINTURL}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
         dotnet user-secrets set "OccupationSearchAPIURL" "${{secrets.OCCUPATIONSEARCHAPIURL}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
         dotnet user-secrets set "UnRegisteUserEndpointURL" "${{secrets.UNREGISTERUSERENDPOINTURL}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
+        dotnet user-secrets set "MediaAssetStorageURL" "${{secrets.MEDIAASSETSTORAGE}}" -p src/client/Maui/UI/De.HDBW.Apollo.Client/De.HDBW.Apollo.Client.csproj
     - name: Restore Keystore
       env:
         BUILD_KEYSTOREFILE_BASE64: ${{ secrets.KEYSTOREFILE }}

@@ -51,6 +51,11 @@ namespace De.HDBW.Apollo.Client.Models.Interactions
             return new InteractionEntry(text, data, navigateHandler, canNavigateHandle, imagePath, false);
         }
 
+        public void RefreshCommands()
+        {
+            NavigateCommand?.NotifyCanExecuteChanged();
+        }
+
         protected virtual bool CanNavigate()
         {
             return CanNavigateHandle?.Invoke(this) ?? false;

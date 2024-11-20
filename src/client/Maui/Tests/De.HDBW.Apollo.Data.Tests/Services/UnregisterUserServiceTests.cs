@@ -39,33 +39,33 @@ namespace De.HDBW.Apollo.Data.Tests.Services
             AuthenticatedServiceHelper.UpdateAuthorizationHeader(_serviceProvider!, null);
             foreach (var serviceType in AuthenticatedServiceHelper.AuthenticatedServices)
             {
-                var service = _serviceProvider.GetService(serviceType) as AbstractSwaggerServiceBase;
+                var service = _serviceProvider!.GetService(serviceType) as AbstractSwaggerServiceBase;
                 Assert.NotNull(service);
                 var httpClient = description!.GetValue(service) as HttpClient;
                 Assert.NotNull(httpClient);
-                Assert.False(httpClient.DefaultRequestHeaders.Contains("Authorization"));
+                Assert.False(httpClient!.DefaultRequestHeaders.Contains("Authorization"));
             }
 
             AuthenticatedServiceHelper.UpdateAuthorizationHeader(_serviceProvider!, header);
             Assert.True(AuthenticatedServiceHelper.AuthenticatedServices.Any());
             foreach (var serviceType in AuthenticatedServiceHelper.AuthenticatedServices)
             {
-                var service = _serviceProvider.GetService(serviceType) as AbstractSwaggerServiceBase;
+                var service = _serviceProvider!.GetService(serviceType) as AbstractSwaggerServiceBase;
                 Assert.NotNull(service);
                 var httpClient = description!.GetValue(service) as HttpClient;
                 Assert.NotNull(httpClient);
-                Assert.True(httpClient.DefaultRequestHeaders.Contains("Authorization"));
+                Assert.True(httpClient!.DefaultRequestHeaders.Contains("Authorization"));
                 Assert.Equal(header, httpClient.DefaultRequestHeaders.GetValues("Authorization").First());
             }
 
             AuthenticatedServiceHelper.UpdateAuthorizationHeader(_serviceProvider!, null);
             foreach (var serviceType in AuthenticatedServiceHelper.AuthenticatedServices)
             {
-                var service = _serviceProvider.GetService(serviceType) as AbstractSwaggerServiceBase;
+                var service = _serviceProvider!.GetService(serviceType) as AbstractSwaggerServiceBase;
                 Assert.NotNull(service);
                 var httpClient = description!.GetValue(service) as HttpClient;
                 Assert.NotNull(httpClient);
-                Assert.False(httpClient.DefaultRequestHeaders.Contains("Authorization"));
+                Assert.False(httpClient!.DefaultRequestHeaders.Contains("Authorization"));
             }
         }
 

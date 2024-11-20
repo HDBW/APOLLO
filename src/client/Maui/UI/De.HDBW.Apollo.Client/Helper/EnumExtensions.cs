@@ -331,69 +331,69 @@ namespace De.HDBW.Apollo.Client.Helper
             switch (enumValue)
             {
                 case DriversLicense.B:
-                    return KnonwIcons.DriversLicenseB;
+                    return KnownIcons.DriversLicenseB;
                 case DriversLicense.BE:
-                    return KnonwIcons.DriversLicenseBE;
+                    return KnownIcons.DriversLicenseBE;
                 case DriversLicense.Forklift:
-                    return KnonwIcons.DriversLicenseForklift;
+                    return KnownIcons.DriversLicenseForklift;
                 case DriversLicense.C1E:
-                    return KnonwIcons.DriversLicenseC1E;
+                    return KnownIcons.DriversLicenseC1E;
                 case DriversLicense.C1:
-                    return KnonwIcons.DriversLicenseC1;
+                    return KnownIcons.DriversLicenseC1;
                 case DriversLicense.L:
-                    return KnonwIcons.DriversLicenseL;
+                    return KnownIcons.DriversLicenseL;
                 case DriversLicense.AM:
-                    return KnonwIcons.DriversLicenseAM;
+                    return KnownIcons.DriversLicenseAM;
                 case DriversLicense.A:
-                    return KnonwIcons.DriversLicenseA;
+                    return KnownIcons.DriversLicenseA;
                 case DriversLicense.CE:
-                    return KnonwIcons.DriversLicenseCE;
+                    return KnownIcons.DriversLicenseCE;
                 case DriversLicense.C:
-                    return KnonwIcons.DriversLicenseC;
+                    return KnownIcons.DriversLicenseC;
                 case DriversLicense.A1:
-                    return KnonwIcons.DriversLicenseA1;
+                    return KnownIcons.DriversLicenseA1;
                 case DriversLicense.B96:
-                    return KnonwIcons.DriversLicenseB96;
+                    return KnownIcons.DriversLicenseB96;
                 case DriversLicense.T:
-                    return KnonwIcons.DriversLicenseT;
+                    return KnownIcons.DriversLicenseT;
                 case DriversLicense.A2:
-                    return KnonwIcons.DriversLicenseA2;
+                    return KnownIcons.DriversLicenseA2;
                 case DriversLicense.Moped:
-                    return KnonwIcons.DriversLicenseMoped;
+                    return KnownIcons.DriversLicenseMoped;
                 case DriversLicense.Drivercard:
-                    return KnonwIcons.DriversLicenseDrivercard;
+                    return KnownIcons.DriversLicenseDrivercard;
                 case DriversLicense.PassengerTransport:
-                    return KnonwIcons.DriversLicensePassengerTransport;
+                    return KnownIcons.DriversLicensePassengerTransport;
                 case DriversLicense.D:
-                    return KnonwIcons.DriversLicenseD;
+                    return KnownIcons.DriversLicenseD;
                 case DriversLicense.InstructorBE:
-                    return KnonwIcons.DriversLicenseInstructorBE;
+                    return KnownIcons.DriversLicenseInstructorBE;
                 case DriversLicense.ConstructionMachines:
-                    return KnonwIcons.DriversLicenseConstructionMachines;
+                    return KnownIcons.DriversLicenseConstructionMachines;
                 case DriversLicense.DE:
-                    return KnonwIcons.DriversLicenseDE;
+                    return KnownIcons.DriversLicenseDE;
                 case DriversLicense.D1:
-                    return KnonwIcons.DriversLicenseD1;
+                    return KnownIcons.DriversLicenseD1;
                 case DriversLicense.D1E:
-                    return KnonwIcons.DriversLicenseD1E;
+                    return KnownIcons.DriversLicenseD1E;
                 case DriversLicense.InstructorA:
-                    return KnonwIcons.DriversLicenseInstructorA;
+                    return KnownIcons.DriversLicenseInstructorA;
                 case DriversLicense.InstructorCE:
-                    return KnonwIcons.DriversLicenseInstructorCE;
+                    return KnownIcons.DriversLicenseInstructorCE;
                 case DriversLicense.TrailerDriving:
-                    return KnonwIcons.DriversLicenseTrailerDriving;
+                    return KnownIcons.DriversLicenseTrailerDriving;
                 case DriversLicense.InstructorDE:
-                    return KnonwIcons.DriversLicenseInstructorDE;
+                    return KnownIcons.DriversLicenseInstructorDE;
                 case DriversLicense.Class1:
-                    return KnonwIcons.DriversLicenseClass1;
+                    return KnownIcons.DriversLicenseClass1;
                 case DriversLicense.Class3:
-                    return KnonwIcons.DriversLicenseClass2;
+                    return KnownIcons.DriversLicenseClass2;
                 case DriversLicense.Class2:
-                    return KnonwIcons.DriversLicenseClass3;
+                    return KnownIcons.DriversLicenseClass3;
                 case DriversLicense.InstructorASF:
-                    return KnonwIcons.DriversLicenseInstructorASF;
+                    return KnownIcons.DriversLicenseInstructorASF;
                 case DriversLicense.InstructorASP:
-                    return KnonwIcons.DriversLicenseInstructorASP;
+                    return KnownIcons.DriversLicenseInstructorASP;
 
                 default:
                     return string.Empty;

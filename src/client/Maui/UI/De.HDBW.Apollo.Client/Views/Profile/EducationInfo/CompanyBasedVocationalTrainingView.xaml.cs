@@ -5,7 +5,7 @@ using De.HDBW.Apollo.Client.ViewModels.Profile.EducationInfoEditors;
 
 namespace De.HDBW.Apollo.Client.Views.Profile.EducationInfo
 {
-    [XamlCompilation(XamlCompilationOptions.Skip)]
+    // [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class CompanyBasedVocationalTrainingView : ContentPage
     {
         public CompanyBasedVocationalTrainingView(CompanyBasedVocationalTrainingViewModel model)
@@ -20,6 +20,12 @@ namespace De.HDBW.Apollo.Client.Views.Profile.EducationInfo
             {
                 return BindingContext as CompanyBasedVocationalTrainingViewModel;
             }
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            ViewModel?.CancelCommand.Execute(null);
+            return true;
         }
     }
 }

@@ -6,8 +6,25 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.1.71" />
+    <PackageReference Include="System.CodeDom" Version="8.0.0" />
+    <PackageReference Include="Invite.Apollo.App.Graph.Common" Version="1.0.1.82" />
     <PackageReference Include="Microsoft.Identity.Client" Version="4.61.3" />
     <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+  </ItemGroup>
+  <ItemGroup>
+     <None Update="T4\ClozeHtml.tt">
+        <Generator>TextTemplatingFilePreprocessor</Generator>
+        <LastGenOutput>ClozeHtml.cs</LastGenOutput>
+      </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="T4\ClozeHtml.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ClozeHtml.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

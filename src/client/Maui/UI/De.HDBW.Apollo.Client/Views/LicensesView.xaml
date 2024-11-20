@@ -6,7 +6,7 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              x:DataType="viewModels:LicensesViewModel"
              Title="{x:Static strings:Resources.LicensesView_Title}"
-             IsBusy="{x:Binding IsBusy}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
     <ScrollView>
         <VerticalStackLayout>

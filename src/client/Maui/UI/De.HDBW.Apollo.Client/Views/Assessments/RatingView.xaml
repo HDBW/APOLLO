@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
+             x:Class="De.HDBW.Apollo.Client.Views.Assessments.RatingView"
+             Title="{x:Binding Title}"
+             x:DataType="viewModel:RatingViewModel"
+             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
+             Style="{StaticResource DefaultPageStyle}">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="RatingEntryTemplate" x:DataType="models:RatingEntry" >
+            <VerticalStackLayout>
+                <Label Text="{x:Binding Text, Mode=OneTime}" Margin="24,0,24,0" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource TextColor}"/>
+                <Grid ColumnDefinitions="*,*,*,*,*,*" Margin="10,0,10,0">
+                    <RadioButton IsChecked="{x:Binding Is0Selected, Mode=TwoWay}" Grid.Column="0" HorizontalOptions="Start" SemanticProperties.Description="{x:Binding BindingContext[TxtAssesmentsRatingViewNotApply], Source={x:Reference PART_Root}, Mode=OneTime}" ControlTemplate="{StaticResource RadioButtonWithoutContentTemplate}"/>
+                    <RadioButton IsChecked="{x:Binding Is1Selected, Mode=TwoWay}" Grid.Column="1" HorizontalOptions="Center" SemanticProperties.Description="{x:Binding BindingContext[TxtAssesmentsRatingView20], Source={x:Reference PART_Root}, Mode=OneWay}" ControlTemplate="{StaticResource RadioButtonWithoutContentTemplate}"/>
+                    <RadioButton IsChecked="{x:Binding Is2Selected, Mode=TwoWay}" Grid.Column="2" HorizontalOptions="Center" SemanticProperties.Description="{x:Binding BindingContext[TxtAssesmentsRatingView40], Source={x:Reference PART_Root}, Mode=OneWay}" ControlTemplate="{StaticResource RadioButtonWithoutContentTemplate}"/>
+                    <RadioButton IsChecked="{x:Binding Is3Selected, Mode=TwoWay}" Grid.Column="3" HorizontalOptions="Center" SemanticProperties.Description="{x:Binding BindingContext[TxtAssesmentsRatingView60], Source={x:Reference PART_Root}, Mode=OneWay}" ControlTemplate="{StaticResource RadioButtonWithoutContentTemplate}"/>
+                    <RadioButton IsChecked="{x:Binding Is4Selected, Mode=TwoWay}" Grid.Column="4" HorizontalOptions="Center" SemanticProperties.Description="{x:Binding BindingContext[TxtAssesmentsRatingView80], Source={x:Reference PART_Root}, Mode=OneWay}" ControlTemplate="{StaticResource RadioButtonWithoutContentTemplate}"/>
+                    <RadioButton IsChecked="{x:Binding Is5Selected, Mode=TwoWay}" Grid.Column="5" HorizontalOptions="End" SemanticProperties.Description="{x:Binding BindingContext[TxtAssesmentsRatingViewApply], Source={x:Reference PART_Root}, Mode=OneTime}" ControlTemplate="{StaticResource RadioButtonWithoutContentTemplate}"/>
+                </Grid>
+                <Grid ColumnDefinitions="auto,*,auto" Margin="24,0,24,0">
+                    <Label Text="{x:Binding BindingContext[TxtAssesmentsRatingViewNotApply], Source={x:Reference PART_Root}, Mode=OneTime}" AutomationProperties.IsInAccessibleTree="False" Style="{StaticResource Noto14}" TextColor="{StaticResource Primary}"/>
+                    <Label Grid.Column="2" Text="{x:Binding BindingContext[TxtAssesmentsRatingViewApply], Source={x:Reference PART_Root}, Mode=OneTime}" AutomationProperties.IsInAccessibleTree="False" Style="{StaticResource Noto14}" TextColor="{StaticResource Primary}"/>
+                </Grid>
+            </VerticalStackLayout>
+        </DataTemplate>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="*,Auto" x:Name="PART_Root">
+        <ScrollView >
+            <VerticalStackLayout Spacing="24" BindableLayout.ItemsSource="{x:Binding MultipleQuestions, Mode=OneWay}" 
+                                 BindableLayout.ItemTemplate="{StaticResource RatingEntryTemplate}"
+                                 Padding="0,24"/>
+        </ScrollView>
+        <Border Grid.Row="1" Padding="24,16" Style="{StaticResource FooterStyle}">
+            <Button Command="{x:Binding NavigateCommand, Mode=OneTime}" Text="{x:Binding [BtnTxtAssesmentsGlobalNext], Mode=OneWay}"/>
+        </Border>
+    </Grid>
+</ContentPage>

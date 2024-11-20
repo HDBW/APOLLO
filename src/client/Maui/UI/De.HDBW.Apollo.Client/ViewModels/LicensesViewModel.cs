@@ -3,10 +3,6 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using De.HDBW.Apollo.Client.Contracts;
-using De.HDBW.Apollo.Data.Repositories;
-using De.HDBW.Apollo.SharedContracts.Models;
-using Invite.Apollo.App.Graph.Common.Backend.Api;
-using Invite.Apollo.App.Graph.Common.Models.Trainings;
 using Microsoft.Extensions.Logging;
 
 namespace De.HDBW.Apollo.Client.ViewModels

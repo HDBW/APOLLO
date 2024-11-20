@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<the49:BottomSheet xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             x:Class="De.HDBW.Apollo.Client.Views.Assessments.SelectionSheet"
+             ios:Page.UseSafeArea="true"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:viewModel="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
+             HasHandle="True"
+             HasBackdrop="True"
+             IsCancelable="True"
+             CornerRadius="16"
+             Padding="0,20"
+             x:DataType="viewModel:SelectionSheetViewModel"
+             BackgroundColor="{StaticResource Neutral500}"
+             Shown="OnShown">
+    <the49:BottomSheet.Detents>
+        <the49:RatioDetent Ratio="0.3" />
+    </the49:BottomSheet.Detents>
+    <VerticalStackLayout>
+        <VerticalStackLayout.Resources>
+            <DataTemplate x:Key="SelectionEntryTemplate" x:DataType="models:SelectableTextEntry">
+                <Border StrokeThickness="0" HorizontalOptions="FillAndExpand" >
+                    <Border StrokeThickness="0" Margin="0,0,4,4">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ToggleSelectionCommand}" />
+                        </Border.GestureRecognizers>
+                        <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto14SemiBold}" Padding="12,4" VerticalTextAlignment="Center" Background="{StaticResource Neutral0}" TextColor="{StaticResource Primary}" VerticalOptions="Center" Margin="0,8">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{x:Binding IsSelected}" Value="True">
+                                    <Setter Property="TextColor" Value="{StaticResource Neutral0}"/>
+                                    <Setter Property="Background" Value="{StaticResource Primary}" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </Border>
+                </Border>
+            </DataTemplate>
+        </VerticalStackLayout.Resources>
+        <Border StrokeThickness="0">
+            <VerticalStackLayout>
+                 <Grid HorizontalOptions="FillAndExpand" Padding="20,0,20,12" x:Name="PART_Root" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label Text="{x:Static strings:Resources.SelectionSheet_Selection}" LineBreakMode="TailTruncation" Margin="0,0,8,0" Style="{StaticResource Noto20Bold}" TextColor="{StaticResource TextColor}" SemanticProperties.HeadingLevel="Level1" VerticalOptions="Center"/>
+                    <ImageButton Grid.Column="1" Command="{x:Binding CloseCommand}"
+                                 WidthRequest="24" HeightRequest="24" VerticalOptions="Center" HorizontalOptions="Center"
+                             SemanticProperties.Description="{x:Static strings:Resources.Global_Close}">
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="{StaticResource Close}" FontFamily="ApolloFontIcons" Size="24" Color="{StaticResource Primary}"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+                </Grid>
+                <FlexLayout BindableLayout.ItemTemplate="{StaticResource SelectionEntryTemplate}"
+                            BindableLayout.ItemsSource="{x:Binding Items, Mode=OneTime}"
+                            Wrap="Wrap" Direction="Row" JustifyContent="Start" Margin="24,0"/>
+            </VerticalStackLayout>
+        </Border>
+    </VerticalStackLayout>
+</the49:BottomSheet>

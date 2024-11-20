@@ -7,7 +7,7 @@
              xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels"
              x:DataType="viewModels:PickUserNameViewModel"
              Title="{x:Static strings:Resources.PickUserNameView_Title}"
-             IsBusy="{x:Binding IsBusy}"
+             IsBusy="{x:Binding IsBusy, Mode=OneWay}"
              Style="{StaticResource DefaultPageStyle}">
     <Grid RowDefinitions="*, Auto">
         <VerticalStackLayout Style="{StaticResource FormContent}" VerticalOptions="Start">
@@ -21,7 +21,7 @@
             </Border>
             <Label Text="{x:Binding [Name]}" Style="{StaticResource ValidationErrorLabel}" />
         </VerticalStackLayout>
-        <Border Grid.Row="1" Background="{StaticResource Neutral0Brush}" StrokeThickness="0" Style="{StaticResource FooterStyle}" />
+        <Border Grid.Row="1" Style="{StaticResource FooterStyle}" />
         <Button Grid.Row="1" Text="{x:Static strings:Resources.Global_Next}" Command="{x:Binding CreateAccountCommand}" Margin="24,16"/>
     </Grid>
 </ContentPage>

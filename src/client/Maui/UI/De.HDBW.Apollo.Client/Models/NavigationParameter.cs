@@ -18,5 +18,9 @@ namespace De.HDBW.Apollo.Client.Models
         SavedState,
 
         Title,
+
+        Language,
+
+        Filter,
     }
 }

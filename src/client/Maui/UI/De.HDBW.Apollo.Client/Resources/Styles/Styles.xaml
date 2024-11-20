@@ -395,8 +395,8 @@
         </Setter>
     </Style>
 
-    <ControlTemplate x:Key="RadioButtonTemplate">
-        <Grid ColumnDefinitions="auto,*" >
+    <ControlTemplate x:Key="RadioButtonWithoutContentTemplate">
+        <Grid ColumnDefinitions="auto" Padding="14">
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroupList>
                     <VisualStateGroup x:Name="CommonStates">
@@ -411,8 +411,7 @@
                     <VisualStateGroup x:Name="CheckedStates">
                         <VisualState x:Name="Checked">
                             <VisualState.Setters>
-                                <Setter TargetName="Button" Property="Ellipse.Stroke" Value="#420A98" />
-                                <Setter TargetName="CheckedIndicator" Property="Ellipse.Fill" Value="#420A98" />
+                                <Setter TargetName="CheckedIndicator" Property="Ellipse.Fill" Value="{StaticResource Primary}" />
                             </VisualState.Setters>
                         </VisualState>
                         <VisualState x:Name="Unchecked" />
@@ -420,24 +419,103 @@
                 </VisualStateGroupList>
             </VisualStateManager.VisualStateGroups>
             <Ellipse x:Name="Button"
-                    Stroke="#404040"
+                    Stroke="{StaticResource Primary}"
                     StrokeThickness="2"
                     InputTransparent="True"
-                    Fill="White"
-                    WidthRequest="21"
-                    HeightRequest="21"
+                    Fill="{StaticResource Neutral0}"
+                    WidthRequest="20"
+                    HeightRequest="20"
                     Aspect="Uniform"
                     HorizontalOptions="Center"
                     VerticalOptions="Center" />
             <Ellipse x:Name="CheckedIndicator"
-                    Fill="White"
+                    Fill="{StaticResource Neutral0}"
+                    StrokeThickness="0"
                     InputTransparent="True"
-                    WidthRequest="11"
-                    HeightRequest="11"
+                    WidthRequest="10"
+                    HeightRequest="10"
                     Aspect="Uniform"
                     HorizontalOptions="Center"
                     VerticalOptions="Center" />
-            <ContentPresenter x:Name="ContentPresenter" Grid.Column="1" HorizontalOptions="Fill" VerticalOptions="Fill" Margin="{TemplateBinding Path=Padding}"/>
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="RadioButtonLikeButtonEafrequencyViewTemplate">
+        <Grid Padding="8">
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal"/>
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter TargetName="BG" Property="BackgroundColor" Value="{StaticResource Primary100}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                    <VisualStateGroup x:Name="CheckedStates">
+                        <VisualState x:Name="Checked">
+                            <VisualState.Setters>
+                                <Setter TargetName="BG" Property="Border.Stroke" Value="{StaticResource Primary}"/>
+                                <Setter TargetName="BG" Property="Border.Shadow">
+                                    <Setter.Value>
+                                        <Shadow Opacity="0"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Unchecked" />
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </VisualStateManager.VisualStateGroups>
+            <Border x:Name="BG" BackgroundColor="{StaticResource Neutral0}" StrokeThickness="4" Stroke="{StaticResource Neutral0}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <Border.Shadow>
+                    <Shadow Brush="{StaticResource Neutral800}" Offset="2,2" Opacity="1" Radius="{OnPlatform '4', Android='8'}"/>
+                </Border.Shadow>
+                <Label Grid.Column="1" Margin="8" Text="{TemplateBinding Content}" Style="{StaticResource Noto16SemiBold}" HorizontalOptions="Center" VerticalOptions="Fill" TextColor="{StaticResource Primary}"/>
+                <!--<ContentPresenter x:Name="ContentPresenter" Grid.Column="1" VerticalOptions="Fill" Margin="8" HorizontalOptions="Center"/>-->
+            </Border>
+        </Grid>
+    </ControlTemplate>
+    
+    <ControlTemplate x:Key="RadioButtonLikeButtonBinaryViewTemplate">
+        <Grid Padding="8">
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal"/>
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter TargetName="BG" Property="BackgroundColor" Value="{StaticResource Primary100}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                    <VisualStateGroup x:Name="CheckedStates">
+                        <VisualState x:Name="Checked">
+                            <VisualState.Setters>
+                                <Setter TargetName="BG" Property="Border.Stroke" Value="{StaticResource Primary}"/>
+                                <Setter TargetName="BG" Property="Border.Shadow">
+                                    <Setter.Value>
+                                        <Shadow Opacity="0"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Unchecked" />
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </VisualStateManager.VisualStateGroups>
+            <Border x:Name="BG" BackgroundColor="{StaticResource Neutral0}" StrokeThickness="4" Stroke="{StaticResource Neutral0}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="8" />
+                </Border.StrokeShape>
+                <Border.Shadow>
+                    <Shadow Brush="{StaticResource Neutral800}" Offset="2,2" Opacity="1" Radius="{OnPlatform '4', Android='8'}"/>
+                </Border.Shadow>
+                <ContentPresenter x:Name="ContentPresenter" Grid.Column="1" VerticalOptions="Fill" Margin="8" HorizontalOptions="Start"/>
+            </Border>
         </Grid>
     </ControlTemplate>
 
@@ -446,7 +524,7 @@
         <Setter Property="FontFamily" Value="NotoSansRegular"/>
         <Setter Property="FontSize" Value="14"/>
     </Style>
-
+    
     <Style TargetType="RefreshView">
         <Setter Property="RefreshColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />
     </Style>
@@ -606,6 +684,8 @@
     </Style>
 
     <Style x:Key="FooterStyle" TargetType="Border">
+        <Setter Property="Border.StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Neutral100}" />
         <Setter Property="Shadow">
             <Setter.Value>
                 <Shadow Brush="{StaticResource Black}" Offset="{OnPlatform '0,-4', Android='0,0'}" Radius="{OnPlatform '4', Android='0'}" Opacity="0.2"/>
@@ -614,6 +694,21 @@
         <Setter Property="StrokeShape">
             <Setter.Value>
                 <RoundRectangle CornerRadius="16,16,0,0" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="PictureEntryBorderStyle" TargetType="Border">
+        <Setter Property="Border.StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Neutral0}" />
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow Brush="{StaticResource Neutral800}" Offset="2,2" Opacity="1" Radius="{OnPlatform '2', Android='8'}"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="8" />
             </Setter.Value>
         </Setter>
     </Style>
@@ -630,7 +725,18 @@
         </Setter>
         <Setter Property="Shadow">
             <Setter.Value>
-                <Shadow Brush="{StaticResource Black}" Offset="0,0" Opacity="0.2" Radius="{OnPlatform '4', Android='8'}"/>
+                <Shadow Brush="{StaticResource Neutral800}" Offset="2,2" Opacity="1" Radius="{OnPlatform '4', Android='8'}"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="InputBorderHeaderStyle" TargetType="Border">
+        <Setter Property="Padding" Value="16,8" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape">
+            <Setter.Value>
+                <RoundRectangle CornerRadius="8,0,0,8" />
             </Setter.Value>
         </Setter>
     </Style>

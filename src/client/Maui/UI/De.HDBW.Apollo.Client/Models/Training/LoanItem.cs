@@ -26,7 +26,15 @@ namespace De.HDBW.Apollo.Client.Models.Training
             Description = loan.Description;
             if (loan.Url != null)
             {
-                Items.Add(InteractiveLineItem.Import(KnonwIcons.Web, loan.Url.OriginalString, openUrlHandler, canOpenUrlHandler));
+                Items.Add(InteractiveLineItem.Import(KnownIcons.Web, loan.Url.OriginalString, openUrlHandler, canOpenUrlHandler));
+            }
+        }
+
+        public bool HasItems
+        {
+            get
+            {
+                return Items.Any();
             }
         }
 

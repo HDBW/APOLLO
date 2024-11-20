@@ -1,0 +1,29 @@
+﻿body {
+    font-family: NotoSansRegular, sans-serif;
+    background-color: #FEFCF7;
+    padding: 0px;
+    margin: 0px;
+    line-height: 2;
+}
+
+input[type=email], select {
+    margin: 5px 0px;
+    color: #420A98;
+    box-sizing: border-box;
+    border: 0px;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    padding: 8px 16px 8px 16px;
+    box-shadow: 2px 2px 5px 1px #846C4B;
+}
+
+    input[type=email]:focus, select:focus {
+        outline: #420A98 solid 2px;
+        outline-offset: -2px;
+    }
+
+p {
+    display: inline-block;
+    line-height: 2;
+}

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="De.HDBW.Apollo.Client.Views.Assessments.JobSearchView"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:interactionModel="clr-namespace:De.HDBW.Apollo.Client.Models.Interactions"
+             xmlns:viewModels="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
+             x:DataType="viewModels:JobSearchViewModel"
+             Title="{x:Static strings:Resources.TxtAssesmentsJobSearchViewTitle}"
+             Style="{StaticResource DefaultPageStyle}">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="ProfessionSelectionTemplate" x:DataType="interactionModel:SelectInteractionEntry" >
+            <Border StrokeThickness="0">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{x:Binding NavigateCommand}" NumberOfTapsRequired="1"/>
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="*">
+                    <Label Text="{x:Binding Text, Mode=OneWay}" Style="{StaticResource Noto16SemiBold}" TextColor="{StaticResource Primary}" VerticalOptions="Center" Margin="24,16,24,16" />
+                    <Border HeightRequest="1" StrokeThickness="0" BackgroundColor="{StaticResource Neutral600}" VerticalOptions="End" Grid.ColumnSpan="2"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="auto,auto,*">
+        <Label Text="{x:Binding DescriptionText}" Style="{StaticResource Noto16}" TextColor="{StaticResource TextColor}" Margin="24"/>
+        <Border Grid.Row="1" Margin="24,4" Style="{StaticResource SearchInputBorderStyle}" >
+            <SearchBar Text="{x:Binding SearchTerm, Mode=TwoWay}"
+                       x:Name="PART_SearchBar"
+                       SemanticProperties.Description="{x:Static strings:Resources.SearchView_Title}"/>
+        </Border>
+        <CollectionView Grid.Row="2" Margin="24,0"
+            ItemsSource="{x:Binding SearchResults}"
+            ItemsLayout="VerticalList"
+            ItemTemplate="{StaticResource ProfessionSelectionTemplate}"/>
+    </Grid>
+</ContentPage>

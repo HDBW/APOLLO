@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:De.HDBW.Apollo.Client.ViewModels.Assessments"
+             xmlns:strings="clr-namespace:De.HDBW.Apollo.Client.Resources.Strings"
+             xmlns:models="clr-namespace:De.HDBW.Apollo.Client.Models.Assessment"
+             x:Class="De.HDBW.Apollo.Client.Views.Assessments.EaconditionView"
+             Title="{x:Static strings:Resources.TxtAssesmentsEaconditionGlobalTitle}"
+             x:DataType="viewModel:EaconditionViewModel"
+             FlowDirection="{x:Binding FlowDirection, Mode=OneWay}"
+             Style="{StaticResource DefaultPageStyle}">
+     <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{x:Binding NavigateBackCommand, Mode=OneWay}" />
+    </Shell.BackButtonBehavior>
+    <ContentPage.Resources>
+        <DataTemplate x:Key="SelectableEaconditionEntry" x:DataType="models:SelectableEaconditionEntry">
+            <Grid>
+                <Border Margin="4" StrokeThickness="0" HeightRequest="96" SemanticProperties.Description="{x:Binding Bezeichnung}" Style="{StaticResource PictureEntryBorderStyle}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{x:Binding ToggleSelectionCommand, Mode=OneTime}"/>
+                    </Border.GestureRecognizers>
+                    <Grid>
+                        <Image Source="{x:Binding Image.AbsolutePath, FallbackValue={x:Null},Mode=OneTime}" Aspect="AspectFill" HeightRequest="96"/>
+                        <Border Padding="12,8,8,4" BackgroundColor="{StaticResource Neutral0}" HorizontalOptions="Start" VerticalOptions="Start" StrokeThickness="0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="0,0,0,8" />
+                            </Border.StrokeShape>
+                            <Label InputTransparent="True" Text="{x:Binding Bezeichnung}" Style="{StaticResource Noto16}" TextColor="{StaticResource Primary}"/>
+                        </Border>
+                        <Grid IsVisible="Collapse">
+                            <Border Stroke="{StaticResource Primary}" StrokeThickness="4">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8" />
+                                </Border.StrokeShape>
+                            </Border>
+                            <Border Stroke="{StaticResource Neutral0}" StrokeThickness="4" Margin="4">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="4" />
+                                </Border.StrokeShape>
+                            </Border>
+                            <Grid.Triggers>
+                                <DataTrigger TargetType="Grid" Binding="{x:Binding IsSelected, Mode=OneWay}" Value="True">
+                                    <Setter Property="IsVisible" Value="Visible"/>
+                                </DataTrigger>
+                            </Grid.Triggers>
+                        </Grid>
+                    </Grid>
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{x:Binding IsSelected, Mode=OneWay}" Value="True">
+                            <Setter Property="SemanticProperties.Hint" Value="{x:Binding BindingContext[TxtAssesmentsGlobalSelected], Source={x:Reference PART_Root}, Mode=OneWay}"/>
+                            <Setter Property="Shadow">
+                                <Setter.Value>
+                                    <Shadow Opacity="0"/>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </Border.Triggers>
+                </Border>
+            </Grid>
+        </DataTemplate>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="Auto, *, Auto" x:Name="PART_Root">
+        <Label Text="{x:Binding [TxtAssesmentsEaConditionDetailViewInstruction], Mode=OneWay}" Margin="24" Style="{StaticResource Noto16}"/>
+        <CollectionView 
+            Grid.Row="1" 
+            ItemTemplate="{StaticResource SelectableEaconditionEntry}"
+            ItemsSource="{x:Binding CurrentChoices, Mode=OneWay}"
+            ItemsLayout="VerticalGrid, 2"
+            Margin="20,0"/>
+        <Border Grid.Row="2" Padding="24,16" Style="{StaticResource FooterStyle}">
+            <VerticalStackLayout>
+                <Label Text="{x:Binding SelectedChoicesCount}" Margin="0,0,0,8" Style="{StaticResource Noto14}" TextColor="{StaticResource TextColor}"/>
+                <Button Command="{x:Binding NavigateCommand, Mode=OneTime}" Text="{x:Binding [BtnTxtAssesmentsEaconditionViewProfessionsCategory], Mode=OneWay}"/>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>
