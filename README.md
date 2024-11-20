@@ -17,14 +17,14 @@ INVITE Project APOLLO - **A**I-based cross-**P**lattform C**O**mpanion-app for *
 
 ## Summary
 
-Invite Project Apollo was a BMBF and BIBB founded government project covering the needs of the German labor market. The original Idea is to create a Life Long Learning Journey analyzed by AI.
+Invite Project Apollo was a BMBF and BIBB founded government project covering the needs of the German labor market. The original Idea is to create a Life Long Learning Journey analyzed by AI. The development team is sad that the data and created AI services are terminated and as such are no longer able to deliver results. 
 The project is now open source and terminated as of November 2024. The project is no longer maintained by the HDBW University of Applied Sciences.
 
 For more information check out our [website](https://project-apollo.de/). 
 
 ## How to Engage, Contribute and Provide Feedback
 
-The project apollo team encourages contributions, both issues and PRs. See [contribution guidlines](CONTRIBUTION.md) for more information.
+This project has been terminated.
 
 
 ## Community
